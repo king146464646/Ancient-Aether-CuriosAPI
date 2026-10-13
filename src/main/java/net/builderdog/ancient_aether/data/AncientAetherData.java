@@ -24,7 +24,7 @@ public class AncientAetherData {
 
         generator.addProvider(event.includeServer(), new AncientAetherAdvancementData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AncientAetherDataMapData(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), AncientAetherLootTableData.create(packOutput));
+        generator.addProvider(event.includeServer(), AncientAetherLootTableData.create(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new AncientAetherRegistrySets(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new AncientAetherRecipeData(packOutput, lookupProvider));
 

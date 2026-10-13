@@ -33,14 +33,14 @@ public class ObeliskBlock extends Block {
 
     @SuppressWarnings("deprecation")
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-        super.use(state, level, pos, player, hand, hit);
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+        super.useWithoutItem(state, level, pos, player, hit);
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
 
         if (player instanceof ServerPlayer serverPlayer && serverPlayer.level() instanceof ServerLevel
-                && serverPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(serverPlayer.server.getAdvancements().get(new ResourceLocation("aether:gold_dungeon")))).isDone()) {
+                && serverPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(serverPlayer.server.getAdvancements().get(ResourceLocation.parse("aether:gold_dungeon")))).isDone()) {
             if (serverPlayer.getMainHandItem().getItem() == AncientAetherItems.ANCIENT_RUNE.get()) {
                 ItemStack stack = player.getMainHandItem();
                 AncientAetherTriggers.OBELISK_ACTIVATION.get().trigger(serverPlayer, serverPlayer.getMainHandItem());

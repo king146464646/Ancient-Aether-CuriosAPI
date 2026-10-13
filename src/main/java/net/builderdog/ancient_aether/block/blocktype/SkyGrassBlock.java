@@ -87,7 +87,7 @@ public class SkyGrassBlock extends TallGrassBlock {
             else return state.setValue(AncientAetherBlockStateProperties.TYPE, AetherGrassType.NORMAL);
     }
 
-    public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
         return state.getValue(LENGTH) < 5;
     }
 

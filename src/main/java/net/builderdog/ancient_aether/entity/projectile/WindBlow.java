@@ -4,7 +4,6 @@ import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.aetherteam.aether.network.packet.clientbound.ZephyrSnowballHitPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
 import net.builderdog.ancient_aether.AncientAetherConfig;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,6 +22,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
@@ -62,7 +62,7 @@ public class WindBlow extends Fireball implements ItemSupplier {
                 }
                 f = 0.8F;
             }
-            setDeltaMovement(vec3.add(xPower, yPower, zPower).scale(f));
+            setDeltaMovement(vec3.add(vec3.normalize().scale(accelerationPower)).scale(f));
             level().addParticle(getTrailParticle(), d0, d1, d2, 0.0, 0.0, 0.0);
             setPos(d0, d1, d2);
         } else discard();
@@ -90,7 +90,7 @@ public class WindBlow extends Fireball implements ItemSupplier {
                 entity.setDeltaMovement(entity.getDeltaMovement().x() + (getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (getDeltaMovement().z() * 1.5));
                 if (livingEntity instanceof ServerPlayer player) {
                     if (!level().isClientSide()) {
-                        PacketRelay.sendToPlayer(new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
+                        PacketDistributor.sendToPlayer(player, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()));
                     }
                 }
             }

@@ -26,7 +26,7 @@ public class AncientAetherTags {
         public static final TagKey<Block> REPLACEABLE_BOSS_ROOM_BLOCKS = tag("replaceable_boss_room_blocks");
 
         private static TagKey<Block> tag(String name) {
-            return TagKey.create(Registries.BLOCK, new ResourceLocation(AncientAether.MODID, name));
+            return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
         }
     }
     public static class Items {
@@ -47,7 +47,7 @@ public class AncientAetherTags {
         public static final TagKey<Item> MYTHIC_LOOT = tag("mythic_loot");
 
         private static TagKey<Item> tag(String name) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation(AncientAether.MODID, name));
+            return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
         }
     }
 
@@ -55,7 +55,7 @@ public class AncientAetherTags {
         public static final TagKey<EntityType<?>> ACTIVATES_WIND_BLOWER = tag();
 
         private static TagKey<EntityType<?>> tag() {
-            return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(AncientAether.MODID, "activates_wind_blower"));
+            return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "activates_wind_blower"));
         }
     }
 
@@ -103,7 +103,7 @@ public class AncientAetherTags {
         public static final TagKey<Biome> HAS_STRUCTURE_ANCIENT_DUNGEON = tag("has_structure/ancient_dungeon");
 
         private static TagKey<Biome> tag(String name) {
-            return TagKey.create(Registries.BIOME, new ResourceLocation(AncientAether.MODID, name));
+            return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
         }
     }
 
@@ -113,7 +113,7 @@ public class AncientAetherTags {
         public static final TagKey<Structure> VALKYRIE_SETTLEMENTS = tag("valkyrie_settlements");
 
         private static TagKey<Structure> tag(String name) {
-            return TagKey.create(Registries.STRUCTURE, new ResourceLocation(AncientAether.MODID, name));
+            return TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
         }
     }
 }

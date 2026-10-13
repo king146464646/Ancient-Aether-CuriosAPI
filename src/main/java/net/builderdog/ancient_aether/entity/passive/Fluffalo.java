@@ -8,12 +8,11 @@ import net.builderdog.ancient_aether.block.AncientAetherBlocks;
 import net.builderdog.ancient_aether.client.AncientAetherSoundEvents;
 import net.builderdog.ancient_aether.data.resources.AncientAetherLoot;
 import net.builderdog.ancient_aether.entity.AncientAetherEntityTypes;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -35,13 +34,11 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class Fluffalo extends WyndcapsAnimal implements Shearable {
@@ -79,9 +76,9 @@ public class Fluffalo extends WyndcapsAnimal implements Shearable {
                 .add(Attributes.ATTACK_KNOCKBACK, 2f);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(SHEARED, false);
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SHEARED, false);
     }
 
     public @NotNull InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
@@ -96,7 +93,7 @@ public class Fluffalo extends WyndcapsAnimal implements Shearable {
         }
     }
 
-    public @NotNull ResourceLocation getDefaultLootTable() {
+    public @NotNull ResourceKey<LootTable> getDefaultLootTable() {
         return isSheared() ? AncientAetherLoot.ENTITIES_FLUFFALO_SHEARED : getType().getDefaultLootTable();
     }
 
@@ -120,8 +117,9 @@ public class Fluffalo extends WyndcapsAnimal implements Shearable {
     }
 
     @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose, EntityDimensions size) {
-        return 0.95F * size.height;
+    protected EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
+        EntityDimensions size = super.getDefaultDimensions(pose);
+        return size.withEyeHeight(0.95F * size.height());
     }
 
     public float getHeadEatPositionScale(float pos) {
@@ -165,11 +163,6 @@ public class Fluffalo extends WyndcapsAnimal implements Shearable {
     }
 
     @Override
-    public boolean isShearable(@Nonnull ItemStack item, @NotNull Level world, @NotNull BlockPos pos) {
-        return readyForShearing();
-    }
-
-    @Override
     public void shear(@NotNull SoundSource sound) {
         level().playSound(null, this, SoundEvents.SHEEP_SHEAR, sound, 1.0F, 1.0F);
         setSheared(true);
@@ -181,23 +174,6 @@ public class Fluffalo extends WyndcapsAnimal implements Shearable {
                 itementity.setDeltaMovement(itementity.getDeltaMovement().add(((random.nextFloat() - random.nextFloat()) * 0.1F), (random.nextFloat() * 0.05F), ((random.nextFloat() - random.nextFloat()) * 0.1F)));
             }
         }
-    }
-
-    @Nonnull
-    @Override
-    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, @NotNull BlockPos pos, int fortune) {
-        world.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-        if (!world.isClientSide) {
-            setSheared(true);
-            int i = 1 + random.nextInt(3);
-
-            List<ItemStack> items = new ArrayList<>();
-            for (int j = 0; j < i; ++j) {
-                items.add(new ItemStack(AncientAetherBlocks.FLUFFALO_WOOL.get()));
-            }
-            return items;
-        }
-        return Collections.emptyList();
     }
 
     @Override

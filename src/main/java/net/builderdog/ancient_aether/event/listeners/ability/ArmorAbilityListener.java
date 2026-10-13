@@ -2,10 +2,11 @@ package net.builderdog.ancient_aether.event.listeners.ability;
 
 import net.builderdog.ancient_aether.event.hooks.AbilityHooks;
 import net.builderdog.ancient_aether.item.equipment.armor.ValkyrumArmor;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class ArmorAbilityListener {
 
@@ -14,9 +15,9 @@ public class ArmorAbilityListener {
         bus.addListener(ArmorAbilityListener::onEntityFall);
     }
 
-    public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        if (!event.isCanceled()) {
+    public static void onEntityUpdate(EntityTickEvent.Post event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof LivingEntity livingEntity) {
             ValkyrumArmor.handleFlight(livingEntity);
         }
     }

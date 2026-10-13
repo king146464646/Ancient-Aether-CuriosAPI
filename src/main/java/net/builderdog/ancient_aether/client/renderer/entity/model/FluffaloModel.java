@@ -79,7 +79,7 @@ public class FluffaloModel<T extends Fluffalo> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        fluffalo.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        fluffalo.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

@@ -16,7 +16,7 @@ public class NaturesBoostEffect extends MobEffect {
         super(MobEffectCategory.BENEFICIAL, 0x8FA8A3);
     }
 
-    public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
         Level level = entity.level();
         if (!level.isClientSide) {
             for (int i = 0; i < 4; ++i) {
@@ -36,5 +36,6 @@ public class NaturesBoostEffect extends MobEffect {
                 }
             }
         }
+        return true;
     }
 }

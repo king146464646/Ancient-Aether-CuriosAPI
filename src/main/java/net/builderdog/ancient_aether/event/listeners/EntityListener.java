@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class EntityListener {
@@ -23,7 +23,7 @@ public class EntityListener {
         EntityHooks.skyrootBucketMilking(targetEntity, player, interactionHand);
     }
 
-    public static void onEntityHurt(LivingHurtEvent event) {
+    public static void onEntityHurt(LivingIncomingDamageEvent event) {
         LivingEntity player = event.getEntity();
         Entity attackerEntity = event.getSource().getDirectEntity();
         if (player instanceof Player && attackerEntity instanceof LivingEntity attacker) {

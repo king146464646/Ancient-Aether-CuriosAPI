@@ -12,20 +12,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class MutatedAechorNeedle extends AbstractDart {
     public MutatedAechorNeedle(EntityType<? extends MutatedAechorNeedle> type, Level level) {
-        super(type, level, ItemStack.EMPTY);
+        super(type, level);
         setBaseDamage(6);
     }
 
     public MutatedAechorNeedle(Level level, LivingEntity shooter) {
-        super(AncientAetherEntityTypes.MUTATED_AECHOR_NEEDLE.get(), level, shooter, ItemStack.EMPTY);
+        super(AncientAetherEntityTypes.MUTATED_AECHOR_NEEDLE.get(), level, shooter, ItemStack.EMPTY, null);
         setBaseDamage(6);
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return ItemStack.EMPTY;
     }
 
     protected void doPostHurtEffects(@NotNull LivingEntity entity) {
         super.doPostHurtEffects(entity);
-        entity.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 250, 0, false, false, true));
-        if (entity.hasEffect(AetherEffects.REMEDY.get())) {
-            entity.removeEffect(AetherEffects.REMEDY.get());
+        entity.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 250, 0, false, false, true));
+        if (entity.hasEffect(AetherEffects.REMEDY)) {
+            entity.removeEffect(AetherEffects.REMEDY);
         }
     }
 }

@@ -14,16 +14,16 @@ public interface DivineTool {
 
     default void grantDivineProtectionBuff(Player player, Level level, BlockPos pos, ItemStack stack, BlockState state) {
         if (!level.isClientSide() && state.getDestroySpeed(level, pos) > 0 && stack.isCorrectToolForDrops(state)) {
-            if (player.hasEffect(AncientAetherEffects.DIVINE_PROTECTION.get())) {
-                if (Objects.requireNonNull(player.getEffect(AncientAetherEffects.DIVINE_PROTECTION.get())).getDuration() < 18000) {
-                    player.addEffect(new MobEffectInstance(AncientAetherEffects.DIVINE_PROTECTION.get(), duration(player), 0, false, true, true));
+            if (player.hasEffect(AncientAetherEffects.DIVINE_PROTECTION)) {
+                if (Objects.requireNonNull(player.getEffect(AncientAetherEffects.DIVINE_PROTECTION)).getDuration() < 18000) {
+                    player.addEffect(new MobEffectInstance(AncientAetherEffects.DIVINE_PROTECTION, duration(player), 0, false, true, true));
                 }
             }
-            else player.addEffect(new MobEffectInstance(AncientAetherEffects.DIVINE_PROTECTION.get(), 100, 0, false, true, true));
+            else player.addEffect(new MobEffectInstance(AncientAetherEffects.DIVINE_PROTECTION, 100, 0, false, true, true));
         }
     }
 
     default int duration(Player player) {
-        return Objects.requireNonNull(player.getEffect(AncientAetherEffects.DIVINE_PROTECTION.get())).getDuration() + 100;
+        return Objects.requireNonNull(player.getEffect(AncientAetherEffects.DIVINE_PROTECTION)).getDuration() + 100;
     }
 }

@@ -6,19 +6,19 @@ import net.builderdog.ancient_aether.block.AncientAetherBlocks;
 import net.builderdog.ancient_aether.data.resources.AncientAetherLoot;
 import net.builderdog.ancient_aether.item.AncientAetherItems;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.function.BiConsumer;
 
 public class AncientAetherSelectorLoot implements LootTableSubProvider {
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
         builder.accept(AncientAetherLoot.SELECTORS_ACCESSORIES_GENERIC, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_RING.get()).setWeight(4))
@@ -127,8 +127,8 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GEMSTONE.get()).setWeight(7))
                         .add(LootItem.lootTableItem(AetherBlocks.ICESTONE.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get()).setWeight(5))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC).setWeight(3))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GENERIC).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GENERIC).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.SKYROOT_REMEDY_BUCKET.get()))
                 ));
 
@@ -142,9 +142,9 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.HEALING_STONE.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AetherBlocks.BLUE_AERCLOUD.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AncientAetherBlocks.VIOLET_AERCLOUD.get()).setWeight(5))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_MYSTERIOUS).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_MYSTERIOUS).setWeight(3))
                         .add(LootItem.lootTableItem(AetherBlocks.GOLDEN_AERCLOUD.get()).setWeight(3))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GENERIC).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GENERIC).setWeight(2))
                         .add(LootItem.lootTableItem(AetherBlocks.AEROGEL.get()))
                 ));
 
@@ -165,12 +165,12 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(Items.QUARTZ).setWeight(5))
                         .add(LootItem.lootTableItem(AetherItems.HEALING_STONE.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherBlocks.AEROGEL.get()).setWeight(3))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_MECHANICAL).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_MECHANICAL).setWeight(3))
                         .add(LootItem.lootTableItem(AncientAetherItems.FESTIVE_GUMMY_SWET.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.POISON_DART_SHOOTER.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.SKYROOT_POISON_BUCKET.get()))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_SENTRY_LABORATORY))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_SENTRY_LABORATORY))
                 ));
 
         builder.accept(AncientAetherLoot.SELECTORS_SENTRY_VASE, LootTable.lootTable()
@@ -185,12 +185,12 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GEMSTONE.get()).setWeight(7))
                         .add(LootItem.lootTableItem(AetherItems.HEALING_STONE.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AncientAetherItems.GRAPES.get()).setWeight(5))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_BRONZE_DUNGEON).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_BRONZE_DUNGEON).setWeight(3))
                         .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_BLOCK.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.SKYROOT_REMEDY_BUCKET.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.BLUE_GUMMY_SWET.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART_SHOOTER.get()))
                 ));
 
@@ -211,8 +211,8 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_BLOCK.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(2))
                         .add(LootItem.lootTableItem(Items.SADDLE).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_SILVER_DUNGEON).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_SILVER_DUNGEON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
                         .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART_SHOOTER.get()))
                         .add(LootItem.lootTableItem(Items.NAME_TAG))
                 ));
@@ -234,8 +234,8 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_BLOCK.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.SKYROOT_WATER_BUCKET.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GOLD_DUNGEON).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_GOLD_DUNGEON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
                         .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART_SHOOTER.get()))
                         .add(LootItem.lootTableItem(Items.SADDLE))
                         .add(LootItem.lootTableItem(AetherBlocks.ENCHANTED_GRAVITITE.get()))
@@ -256,8 +256,8 @@ public class AncientAetherSelectorLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AncientAetherItems.FESTIVE_GUMMY_SWET.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_BLOCK.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_ANCIENT_DUNGEON).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_ACCESSORIES_ANCIENT_DUNGEON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.SELECTORS_TRIMS_GENERIC))
                         .add(LootItem.lootTableItem(AetherBlocks.ENCHANTED_GRAVITITE.get()))
                 ));
 

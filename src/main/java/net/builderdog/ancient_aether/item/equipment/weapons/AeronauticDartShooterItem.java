@@ -15,11 +15,13 @@ public class AeronauticDartShooterItem extends DartShooterItem {
         super(dartType, properties);
     }
 
+    @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return (stack) -> stack.is(AetherTags.Items.DARTS);
     }
 
-    public AbstractDart customDart(AbstractDart dart) {
+    @Override
+    public AbstractDart customDart(AbstractDart dart, ItemStack projectileStack, ItemStack weaponStack) {
         AeronauticDart aeronauticDart = new AeronauticDart(dart.level());
         aeronauticDart.setOwner(dart.getOwner());
         if (aeronauticDart.getOwner() != null) {

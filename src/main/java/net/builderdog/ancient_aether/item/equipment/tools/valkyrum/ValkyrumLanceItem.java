@@ -1,33 +1,38 @@
 package net.builderdog.ancient_aether.item.equipment.tools.valkyrum;
 
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
-import com.google.common.collect.Multimap;
 import net.builderdog.ancient_aether.item.equipment.AncientAetherItemTiers;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 
 public class ValkyrumLanceItem extends SwordItem implements ValkyrieTool {
     public ValkyrumLanceItem() {
-        super(AncientAetherItemTiers.VALKYRUM, 2, -2.7F, (new Properties()));
+        super(AncientAetherItemTiers.VALKYRUM, new Properties()
+            .attributes(SwordItem.createAttributes(AncientAetherItemTiers.VALKYRUM, 2, -2.7F)
+                .withModifierAdded(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(BLOCK_INTERACTION_RANGE_MODIFIER_UUID, RANGE_MODIFER, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .withModifierAdded(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ENTITY_INTERACTION_RANGE_MODIFIER_UUID, RANGE_MODIFER, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)));
     }
 
-    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
-        return extendReachModifier(super.getAttributeModifiers(slot, stack), slot);
+    @Override
+    public boolean isPrimaryItemFor(ItemStack stack, Holder<Enchantment> enchantment) {
+        return super.isPrimaryItemFor(stack, enchantment) && !enchantment.is(Enchantments.SWEEPING_EDGE);
     }
 
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.category.canEnchant(stack.getItem()) && enchantment != Enchantments.SWEEPING_EDGE;
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return super.supportsEnchantment(stack, enchantment) && !enchantment.is(Enchantments.SWEEPING_EDGE);
     }
 
-    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ToolAction toolAction) {
-        return ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction) && toolAction != ToolActions.SWORD_SWEEP;
+    @Override
+    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
+        return ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(itemAbility) && itemAbility != ItemAbilities.SWORD_SWEEP;
     }
 }

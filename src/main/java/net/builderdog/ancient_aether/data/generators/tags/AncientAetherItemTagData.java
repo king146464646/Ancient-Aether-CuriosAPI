@@ -295,10 +295,10 @@ public class AncientAetherItemTagData extends ItemTagsProvider {
                 AncientAetherBlocks.HIGHSPROOT_FENCE.get().asItem(),
                 AncientAetherBlocks.SAKURA_FENCE.get().asItem()
         );
-        tag(Tags.Items.GLASS).add(
+        tag(Tags.Items.GLASS_BLOCKS).add(
                 AncientAetherBlocks.AEROGEL_GLASS.get().asItem()
         );
-        tag(Tags.Items.GLASS_COLORLESS).add(
+        tag(Tags.Items.GLASS_BLOCKS_COLORLESS).add(
                 AncientAetherBlocks.AEROGEL_GLASS.get().asItem()
         );
         tag(Tags.Items.GLASS_PANES).add(
@@ -307,7 +307,7 @@ public class AncientAetherItemTagData extends ItemTagsProvider {
         tag(Tags.Items.GLASS_PANES_COLORLESS).add(
                 AncientAetherBlocks.AEROGEL_GLASS_PANE.get().asItem()
         );
-        tag(Tags.Items.INGOTS_BRICK).add(
+        tag(Tags.Items.BRICKS).add(
                 AncientAetherItems.VALKYRIE_BRICK.get()
         );
         tag(Tags.Items.ORE_RATES_SINGULAR).add(
@@ -321,16 +321,10 @@ public class AncientAetherItemTagData extends ItemTagsProvider {
         tag(Tags.Items.STORAGE_BLOCKS).add(
                 AncientAetherBlocks.VALKYRUM_BLOCK.get().asItem()
         );
-        tag(Tags.Items.ARMORS_HELMETS).add(
-                AncientAetherItems.VALKYRUM_HELMET.get()
-        );
-        tag(Tags.Items.ARMORS_CHESTPLATES).add(
-                AncientAetherItems.VALKYRUM_CHESTPLATE.get()
-        );
-        tag(Tags.Items.ARMORS_LEGGINGS).add(
-                AncientAetherItems.VALKYRUM_LEGGINGS.get()
-        );
-        tag(Tags.Items.ARMORS_BOOTS).add(
+        tag(Tags.Items.ARMORS).add(
+                AncientAetherItems.VALKYRUM_HELMET.get(),
+                AncientAetherItems.VALKYRUM_CHESTPLATE.get(),
+                AncientAetherItems.VALKYRUM_LEGGINGS.get(),
                 AncientAetherItems.VALKYRUM_BOOTS.get()
         );
 

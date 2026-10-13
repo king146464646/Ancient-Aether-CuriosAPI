@@ -41,6 +41,6 @@ public class AncientAetherSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_REMEDY_CRYSTAL_EXPLODE = register("entity.remedy_crystal.explode");
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String location) {
-        return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(AncientAether.MODID, location)));
+        return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, location)));
     }
 }

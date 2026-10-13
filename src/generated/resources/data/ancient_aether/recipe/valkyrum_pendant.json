@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "ancient_aether:valkyrum"
+    },
+    "S": {
+      "tag": "c:string"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    " # "
+  ],
+  "result": {
+    "id": "ancient_aether:valkyrum_pendant"
+  }
+}

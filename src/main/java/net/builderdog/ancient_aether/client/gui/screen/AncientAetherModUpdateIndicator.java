@@ -1,32 +1,34 @@
 package net.builderdog.ancient_aether.client.gui.screen;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.VersionChecker;
+import net.neoforged.fml.i18n.FMLTranslations;
 import net.neoforged.fml.loading.FMLConfig;
-import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 import net.neoforged.neoforge.client.loading.ClientModLoader;
-import net.neoforged.neoforge.common.I18nExtension;
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class AncientAetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
-    private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(NeoForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
+public class AncientAetherModUpdateIndicator implements Renderable {
+    private static final ResourceLocation VERSION_CHECK_ICONS = ResourceLocation.fromNamespaceAndPath(NeoForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
     private final AncientAetherTitleScreen screen;
+    private int width;
+    private int height;
+    private Font font;
     @Nullable
     private VersionChecker.Status showNotification = null;
     private boolean hasCheckedForUpdates = false;
 
     public AncientAetherModUpdateIndicator(AncientAetherTitleScreen screen) {
-        super(null);
         this.screen = screen;
     }
 
-    @Override
     public void init() {
         if (!hasCheckedForUpdates) {
             showNotification = ClientModLoader.checkForUpdates();
@@ -41,7 +43,7 @@ public class AncientAetherModUpdateIndicator extends TitleScreenModUpdateIndicat
             height = Minecraft.getInstance().screen.height;
             font = Minecraft.getInstance().font;
             int modCount = ModList.get().size();
-            String modText = I18nExtension.parseMessage("fml.menu.loadingmods", modCount);
+            String modText = FMLTranslations.parseMessage("fml.menu.loadingmods", modCount);
 
             int x = width - font.width(modText) - 11;
             int y = height - font.lineHeight - 11;

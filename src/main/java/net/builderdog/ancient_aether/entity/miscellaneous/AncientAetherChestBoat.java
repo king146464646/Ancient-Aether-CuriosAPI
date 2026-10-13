@@ -3,7 +3,7 @@ package net.builderdog.ancient_aether.entity.miscellaneous;
 import net.builderdog.ancient_aether.entity.AncientAetherEntityTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -30,7 +31,7 @@ public class AncientAetherChestBoat extends AncientAetherBoat implements HasCust
     private static final int CONTAINER_SIZE = 27;
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
     @Nullable
-    private ResourceLocation lootTable;
+    private ResourceKey<LootTable> lootTable;
     private long lootTableSeed;
 
     public AncientAetherChestBoat(EntityType<? extends Boat> entityType, Level level) {
@@ -58,13 +59,13 @@ public class AncientAetherChestBoat extends AncientAetherBoat implements HasCust
     @Override
     protected void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        addChestVehicleSaveData(pCompound);
+        addChestVehicleSaveData(pCompound, registryAccess());
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        readChestVehicleSaveData(pCompound);
+        readChestVehicleSaveData(pCompound, registryAccess());
     }
 
     @Override
@@ -160,12 +161,12 @@ public class AncientAetherChestBoat extends AncientAetherBoat implements HasCust
     }
 
     @Nullable
-    public ResourceLocation getLootTable() {
+    public ResourceKey<LootTable> getLootTable() {
         return lootTable;
     }
 
     @Override
-    public void setLootTable(@Nullable ResourceLocation location) {
+    public void setLootTable(@Nullable ResourceKey<LootTable> location) {
         lootTable = location;
     }
 

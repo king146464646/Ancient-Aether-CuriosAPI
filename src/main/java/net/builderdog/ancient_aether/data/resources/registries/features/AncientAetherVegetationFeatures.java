@@ -8,7 +8,7 @@ import net.builderdog.ancient_aether.data.resources.AncientAetherFeatureStates;
 import net.builderdog.ancient_aether.world.feature.AncientAetherFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -57,7 +57,7 @@ public class AncientAetherVegetationFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SAKURA = AncientAetherFeatureUtils.registerKey("trees_sakura");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_ELEVATED_ISLANDS = AncientAetherFeatureUtils.registerKey("trees_elevated_islands");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         AncientAetherFeatureUtils.register(context, SINGLE_PIECE_OF_SKY_GRASS, AncientAetherFeatures.SKY_GRASS.get(), new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ancient_aether:valkyrie_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "ancient_aether:valkyrie_tile_slab"
+  }
+}

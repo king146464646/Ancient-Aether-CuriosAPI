@@ -8,7 +8,7 @@ import com.aetherteam.aether.world.placementmodifier.ImprovedLayerPlacementModif
 import net.builderdog.ancient_aether.data.resources.registries.features.AncientAetherVegetationFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -47,7 +47,7 @@ public class AncientAetherVegetationPlacements extends TrunkVineDecorator {
     public static final ResourceKey<PlacedFeature> ELEVATED_CLEARING_TREES = AncientAetherPlacementUtils.createKey("elevated_clearing_trees");
     public static final ResourceKey<PlacedFeature> ELEVATED_FOREST_TREES = AncientAetherPlacementUtils.createKey("elevated_forest_trees");
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         AncientAetherPlacementUtils.register(context, AETHER_GRASS_PATCH, configuredFeatures.getOrThrow(AncientAetherVegetationFeatures.AETHER_GRASS_PATCH),

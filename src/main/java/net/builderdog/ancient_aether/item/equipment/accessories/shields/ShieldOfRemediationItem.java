@@ -12,12 +12,11 @@ public class ShieldOfRemediationItem extends ShieldAccessoryItem {
         super(properties, shieldName);
     }
 
-
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (livingEntity.hasEffect(AetherEffects.INEBRIATION.get())) {
-            livingEntity.removeEffect(AetherEffects.INEBRIATION.get());
+        if (livingEntity.hasEffect(AetherEffects.INEBRIATION)) {
+            livingEntity.removeEffect(AetherEffects.INEBRIATION);
         }
     }
 }

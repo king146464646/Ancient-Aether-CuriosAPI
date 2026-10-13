@@ -2,7 +2,7 @@ package net.builderdog.ancient_aether.data.resources.registries.features;
 
 import com.aetherteam.aether.AetherTags;
 import net.builderdog.ancient_aether.data.resources.AncientAetherFeatureStates;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -18,7 +18,7 @@ public class AncientAetherOreFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> AETHER_QUARTZ_ORE = AncientAetherFeatureUtils.registerKey("aether_quartz_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> VALKYRUM_ORE = AncientAetherFeatureUtils.registerKey("valkyrum_ore");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest holystone = new TagMatchTest(AetherTags.Blocks.HOLYSTONE);
 
         List<OreConfiguration.TargetBlockState> aerogelBlobs = List.of(OreConfiguration.target(holystone, AncientAetherFeatureStates.AEROGEL));

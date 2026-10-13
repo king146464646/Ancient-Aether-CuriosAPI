@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:logs"
+    },
+    "/": {
+      "tag": "c:rods/wooden"
+    },
+    "A": {
+      "item": "aether:ambrosium_shard"
+    }
+  },
+  "pattern": [
+    " / ",
+    "/A/",
+    "###"
+  ],
+  "result": {
+    "id": "ancient_aether:ambrosium_campfire"
+  }
+}

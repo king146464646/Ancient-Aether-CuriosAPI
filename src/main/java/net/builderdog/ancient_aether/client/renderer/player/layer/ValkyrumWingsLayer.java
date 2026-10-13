@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ValkyrumWingsLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(AncientAether.MODID, "textures/models/valkyrum_wings.png");
+    private static final ResourceLocation WINGS_TEXTURE = ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/models/valkyrum_wings.png");
     private final ValkyrieWingsModel<Player> wings;
 
     public ValkyrumWingsLayer(RenderLayerParent<T, M> entityRenderer, EntityModelSet modelSet) {
@@ -34,7 +34,7 @@ public class ValkyrumWingsLayer<T extends Player, M extends PlayerModel<T>> exte
             var data = entity.getData(AetherDataAttachments.AETHER_PLAYER);
             setupWingRotation(entity, Mth.lerp(partialTicks, data.getWingRotationO(), data.getWingRotation()));
             VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(WINGS_TEXTURE));
-            wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         }
     }
 

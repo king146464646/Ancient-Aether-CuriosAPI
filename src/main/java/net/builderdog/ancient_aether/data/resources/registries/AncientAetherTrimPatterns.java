@@ -5,7 +5,7 @@ import net.builderdog.ancient_aether.item.AncientAetherItems;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -25,10 +25,10 @@ public class AncientAetherTrimPatterns extends TrimPatterns {
     public static final ResourceKey<TrimPattern> ANCIENT = createKey("ancient");
 
     private static ResourceKey<TrimPattern> createKey(String name) {
-        return ResourceKey.create(Registries.TRIM_PATTERN, new ResourceLocation(AncientAether.MODID, name));
+        return ResourceKey.create(Registries.TRIM_PATTERN, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<TrimPattern> context) {
+    public static void bootstrap(BootstrapContext<TrimPattern> context) {
         register(context, AncientAetherItems.WYND_ARMOR_TRIM_SMITHING_TEMPLATE.get(), WYND);
         register(context, AncientAetherItems.WHALE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), WHALE);
         register(context, AncientAetherItems.ASCENDED_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ASCENDED);
@@ -40,7 +40,7 @@ public class AncientAetherTrimPatterns extends TrimPatterns {
         register(context, AncientAetherItems.ANCIENT_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ANCIENT);
     }
 
-    private static void register(BootstapContext<TrimPattern> context, Item item, ResourceKey<TrimPattern> patternKey) {
+    public static void register(BootstrapContext<TrimPattern> context, Item item, ResourceKey<TrimPattern> patternKey) {
         TrimPattern trimpattern = new TrimPattern(patternKey.location(), BuiltInRegistries.ITEM.wrapAsHolder(item), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false);
         context.register(patternKey, trimpattern);
     }

@@ -13,11 +13,11 @@ public class WeaponAbilityListener {
         bus.addListener(WeaponAbilityListener::onEntityDamage);
     }
 
-    public static void onEntityDamage(LivingDamageEvent event) {
+    public static void onEntityDamage(LivingDamageEvent.Pre event) {
         LivingEntity targetEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         Entity sourceEntity = damageSource.getDirectEntity();
-        event.setAmount(AbilityHooks.WeaponHooks.reduceWeaponEffectiveness(targetEntity, sourceEntity, event.getAmount()));
-        event.setAmount(AbilityHooks.WeaponHooks.reduceArmorEffectiveness(targetEntity, sourceEntity, event.getAmount()));
+        event.setNewDamage(AbilityHooks.WeaponHooks.reduceWeaponEffectiveness(targetEntity, sourceEntity, event.getNewDamage()));
+        event.setNewDamage(AbilityHooks.WeaponHooks.reduceArmorEffectiveness(targetEntity, sourceEntity, event.getNewDamage()));
     }
 }

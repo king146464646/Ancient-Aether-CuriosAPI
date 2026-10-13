@@ -1,6 +1,5 @@
 package net.builderdog.ancient_aether.entity.miscellaneous;
 
-import com.aetherteam.aether.entity.miscellaneous.SkyrootBoatBehavior;
 import net.builderdog.ancient_aether.AncientAether;
 import net.builderdog.ancient_aether.entity.AncientAetherEntityTypes;
 import net.builderdog.ancient_aether.item.AncientAetherItems;
@@ -12,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class AncientAetherBoat extends Boat implements SkyrootBoatBehavior {
+public class AncientAetherBoat extends Boat {
     private static final EntityDataAccessor<Integer> WOOD_TYPE = SynchedEntityData.defineId(AncientAetherBoat.class, EntityDataSerializers.INT);
 
     public AncientAetherBoat(EntityType<? extends Boat> type, Level level) {
@@ -37,9 +37,9 @@ public class AncientAetherBoat extends Boat implements SkyrootBoatBehavior {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(WOOD_TYPE, 0);
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(WOOD_TYPE, 0);
     }
 
     @Override
@@ -69,8 +69,8 @@ public class AncientAetherBoat extends Boat implements SkyrootBoatBehavior {
     }
 
     @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this);
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+        return new ClientboundAddEntityPacket(this, serverEntity);
     }
 
     public enum Type {
@@ -89,9 +89,9 @@ public class AncientAetherBoat extends Boat implements SkyrootBoatBehavior {
 
         public ResourceLocation getTexture(boolean hasChest) {
             if (hasChest) {
-                return new ResourceLocation(AncientAether.MODID, "textures/entity/miscellaneous/chest_boat/" + name + ".png");
+                return ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/entity/miscellaneous/chest_boat/" + name + ".png");
             }
-            return new ResourceLocation(AncientAether.MODID, "textures/entity/miscellaneous/boat/" + name + ".png");
+            return ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/entity/miscellaneous/boat/" + name + ".png");
         }
 
         public String getModelLocation() {

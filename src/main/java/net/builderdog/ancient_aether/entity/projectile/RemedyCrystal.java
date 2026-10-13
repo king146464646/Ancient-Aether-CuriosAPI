@@ -54,7 +54,7 @@ public class RemedyCrystal extends AbstractCrystal {
         } else {
             Entity attackerEntity = source.getDirectEntity();
             if (attackerEntity instanceof LivingEntity attacker) {
-                attacker.addEffect(new MobEffectInstance(AetherEffects.REMEDY.get(), 100, 0, false, false, true));
+                attacker.addEffect(new MobEffectInstance(AetherEffects.REMEDY, 100, 0, false, false, true));
                 kill();
             }
         }

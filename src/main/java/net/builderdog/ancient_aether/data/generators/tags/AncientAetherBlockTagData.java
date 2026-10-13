@@ -278,10 +278,10 @@ public class AncientAetherBlockTagData extends BlockTagsProvider {
                 AncientAetherBlocks.HIGHSPROOT_FENCE.get(),
                 AncientAetherBlocks.SAKURA_FENCE.get()
         );
-        tag(Tags.Blocks.GLASS).add(
+        tag(Tags.Blocks.GLASS_BLOCKS).add(
                 AncientAetherBlocks.AEROGEL_GLASS.get()
         );
-        tag(Tags.Blocks.GLASS_COLORLESS).add(
+        tag(Tags.Blocks.GLASS_BLOCKS_COLORLESS).add(
                 AncientAetherBlocks.AEROGEL_GLASS.get()
         );
         tag(Tags.Blocks.GLASS_PANES).add(

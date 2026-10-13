@@ -13,8 +13,8 @@ public class ShieldAccessoryItem extends AccessoryItem {
     }
 
     public void setRenderTexture(String modId, String registryName) {
-        SHIELD_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/shields/" + registryName + "_accessory.png");
-        SHIELD_SLIM_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/shields/" + registryName + "_slim_accessory.png");
+        SHIELD_TEXTURE = ResourceLocation.fromNamespaceAndPath(modId, "textures/models/accessory/shields/" + registryName + "_accessory.png");
+        SHIELD_SLIM_TEXTURE = ResourceLocation.fromNamespaceAndPath(modId, "textures/models/accessory/shields/" + registryName + "_slim_accessory.png");
     }
 
     public ResourceLocation getShieldTexture() {

@@ -1,5 +1,6 @@
 package net.builderdog.ancient_aether.block.blocktype;
 
+import net.builderdog.ancient_aether.item.equipment.AncientAetherItemTiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
@@ -17,7 +18,7 @@ public class ValkyrumBlock extends Block {
     @Override
     public boolean canHarvestBlock(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, Player player) {
         if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-            return tieredItem.getTier().getLevel() >= 5;
+            return tieredItem.getTier() == AncientAetherItemTiers.VALKYRUM;
         return false;
     }
 }

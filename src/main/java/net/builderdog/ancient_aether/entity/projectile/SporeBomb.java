@@ -17,13 +17,18 @@ import org.jetbrains.annotations.NotNull;
 public class SporeBomb extends AbstractDart {
 
     public SporeBomb(EntityType<? extends SporeBomb> type, Level level) {
-        super(type, level, ItemStack.EMPTY);
+        super(type, level);
         setNoGravity(false);
     }
 
     public SporeBomb(Level level, LivingEntity shooter) {
-        super(AncientAetherEntityTypes.SPORE_BOMB.get(), level, shooter, ItemStack.EMPTY);
+        super(AncientAetherEntityTypes.SPORE_BOMB.get(), level, shooter, ItemStack.EMPTY, null);
         setNoGravity(false);
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -35,7 +40,7 @@ public class SporeBomb extends AbstractDart {
                 areaEffectCloud.setPos(getX(), getY(), getZ());
                 areaEffectCloud.setRadius(4.0F);
                 areaEffectCloud.setDuration(300);
-                areaEffectCloud.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 60, 0));
+                areaEffectCloud.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 60, 0));
                 areaEffectCloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 0));
                 areaEffectCloud.setParticle(AncientAetherParticleTypes.TOXIC_SPORES.get());
                 level().addFreshEntity(areaEffectCloud);

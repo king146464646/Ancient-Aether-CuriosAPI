@@ -1,6 +1,7 @@
 package net.builderdog.ancient_aether.world.structure.jigsaw;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.builderdog.ancient_aether.world.structure.AncientAetherStructureTypes;
 import net.minecraft.core.BlockPos;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBinding;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.Optional;
 
 public class SkylandsJigsawStructure extends Structure {
 
-    public static final Codec<SkylandsJigsawStructure> CODEC = RecordCodecBuilder.<SkylandsJigsawStructure>mapCodec(instance ->
+    public static final MapCodec<SkylandsJigsawStructure> CODEC = RecordCodecBuilder.<SkylandsJigsawStructure>mapCodec(instance ->
             instance.group(SkylandsJigsawStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -33,7 +35,7 @@ public class SkylandsJigsawStructure extends Structure {
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
                     Codec.intRange(-4096, 4096).fieldOf("above_bottom").forGetter(structure -> structure.aboveBottom),
                     Codec.list(PoolAliasBinding.CODEC).optionalFieldOf("pool_aliases", List.of()).forGetter(structure -> structure.poolAliases)
-            ).apply(instance, SkylandsJigsawStructure::new)).codec();
+            ).apply(instance, SkylandsJigsawStructure::new));
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;
     private final int size;
@@ -91,7 +93,9 @@ public class SkylandsJigsawStructure extends Structure {
                 false,
                 projectStartToHeightmap,
                 maxDistanceFromCenter,
-                PoolAliasLookup.create(poolAliases, pos, context.seed())
+                PoolAliasLookup.create(poolAliases, pos, context.seed()),
+                JigsawStructure.DEFAULT_DIMENSION_PADDING,
+                JigsawStructure.DEFAULT_LIQUID_SETTINGS
         );
     }
 

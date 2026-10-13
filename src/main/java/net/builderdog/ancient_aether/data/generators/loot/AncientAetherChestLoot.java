@@ -6,13 +6,13 @@ import net.builderdog.ancient_aether.block.AncientAetherBlocks;
 import net.builderdog.ancient_aether.data.resources.AncientAetherLoot;
 import net.builderdog.ancient_aether.item.AncientAetherItems;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 
 public class AncientAetherChestLoot implements LootTableSubProvider {
     @Override
-    public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+    public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
 
         builder.accept(AncientAetherLoot.CHESTS_CAMP_GENERIC, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 3.0F))
@@ -60,7 +60,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_CAMP_SKYROOT, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_CAMP_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_CAMP_GENERIC))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
                         .add(LootItem.lootTableItem(Blocks.WHITE_WOOL).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
@@ -69,7 +69,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_CAMP_WYNDCAPS, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_CAMP_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_CAMP_GENERIC))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
                         .add(LootItem.lootTableItem(AncientAetherBlocks.FLUFFALO_WOOL.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
@@ -95,7 +95,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_SHOP, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_GENERIC))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 3.0F))
                         .add(LootItem.lootTableItem(Items.LEATHER_HELMET))
@@ -109,7 +109,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_LIBRARY, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_GENERIC))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_SETTLEMENT_SKYROOT_GENERIC))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
                         .add(LootItem.lootTableItem(Items.PAPER).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 6.0F))))
@@ -180,9 +180,9 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_LOOT).setWeight(3))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_JUNK).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_SPECIAL).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_LOOT).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_JUNK).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_BRONZE_DUNGEON_SPECIAL).setWeight(1))
                 )
         );
 
@@ -206,8 +206,8 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AncientAetherItems.PINK_CAPE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.BLUE_CAPE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART_SHOOTER.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.SWET_CAPE.get()))
                         .add(LootItem.lootTableItem(AetherItems.AGILITY_CAPE.get()))
                 )
@@ -243,7 +243,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GEMSTONE.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.AGILITY_CAPE.get()))
                         .add(LootItem.lootTableItem(AetherItems.SWET_CAPE.get()))
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_CAT))
@@ -256,8 +256,8 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(6))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_HOE.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART_SHOOTER.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
                 )
         );
 
@@ -277,7 +277,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_SHOVEL.get()).setWeight(6))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(6))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_HOE.get()).setWeight(4))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS).setWeight(2))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(AetherItems.BOOK_OF_LORE.get()).setWeight(6))
@@ -329,9 +329,9 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_LOOT).setWeight(4))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_SUPPLIES).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_MISCELLANEOUS).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_LOOT).setWeight(4))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_SUPPLIES).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_SENTRY_LABORATORY_MISCELLANEOUS).setWeight(2))
                 )
         );
 
@@ -350,7 +350,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(6))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GLOVES.get()).setWeight(5))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(4))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.NATURE_STAFF.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_HELMET.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_BOOTS.get()).setWeight(3))
@@ -359,7 +359,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_LEGGINGS.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.ICE_RING.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.ICE_PENDANT.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_HOE.get()))
                         .add(LootItem.lootTableItem(AetherItems.POISON_DART_SHOOTER.get()))
                 )
@@ -383,7 +383,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.NATURE_STAFF.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherBlocks.PRESENT.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GLOVES.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON))
                         .add(LootItem.lootTableItem(AetherItems.ICE_RING.get()))
                         .add(LootItem.lootTableItem(AetherItems.ICE_PENDANT.get()))
                         .add(LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()))
@@ -417,7 +417,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.GINGERBREAD_MAN.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 6.0F))))
                         .add(LootItem.lootTableItem(AetherItems.CANDY_CANE.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_STRAD).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON))
                         .add(LootItem.lootTableItem(AetherItems.ICE_RING.get()))
                         .add(LootItem.lootTableItem(AetherItems.ICE_PENDANT.get()))
                         .add(LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()))
@@ -433,13 +433,13 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AncientAetherItems.MECHANICAL_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherBlocks.ENCHANTED_GRAVITITE.get()).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_COMMON).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_HOE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherBlocks.PRESENT.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(AncientAetherItems.ANCIENT_RUNE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AncientAetherItems.WARRIOR_RING.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AncientAetherItems.WARRIOR_PENDANT.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_HELMET.get()))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_CHESTPLATE.get()))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_LEGGINGS.get()))
@@ -479,8 +479,8 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_AXE.get()))
                         .add(LootItem.lootTableItem(AncientAetherItems.AERONAUTIC_DART_SHOOTER.get()))
                         .add(LootItem.lootTableItem(AetherItems.MUSIC_DISC_AETHER_TUNE.get()))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_RARE))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_ARMOR_TRIMS))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_RARE))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(AncientAetherBlocks.AEROGETIC_STONE).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
@@ -505,7 +505,7 @@ public class AncientAetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AncientAetherItems.GROWTH_PENDANT.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AncientAetherItems.GROWTH_RING.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AncientAetherItems.ANCIENT_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(4))
-                        .add(LootTableReference.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_RARE).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AncientAetherLoot.CHESTS_DUNGEON_MOA_EGGS_RARE).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.LIFE_SHARD.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_SWORD.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_AXE.get()).setWeight(3))

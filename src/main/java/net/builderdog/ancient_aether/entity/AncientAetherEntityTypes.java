@@ -14,10 +14,10 @@ import net.builderdog.ancient_aether.entity.projectile.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -27,7 +27,7 @@ public class AncientAetherEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<Fluffalo>> FLUFFALO = ENTITY_TYPES.register("fluffalo", () -> EntityType.Builder.of(Fluffalo::new, MobCategory.CREATURE).sized(1.5F, 1.75F).clientTrackingRange(10).build("fluffalo"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Swet>> FESTIVE_SWET = ENTITY_TYPES.register("festive_swet", () -> EntityType.Builder.of(Swet::new, AetherMobCategory.AETHER_SURFACE_MONSTER).sized(0.9F, 0.95F).clientTrackingRange(10).build("festive_swet"));
-    public static final DeferredHolder<EntityType<?>, EntityType<Slammroot>> SLAMMROOT = ENTITY_TYPES.register("slammroot", () -> EntityType.Builder.of(Slammroot::new, MobCategory.MONSTER).sized(2.0F, 2.0F).clientTrackingRange(16).build("slammroot"));
+    public static final DeferredHolder<EntityType<?>, EntityType<Slammroot>> SLAMMROOT = ENTITY_TYPES.register("slammroot", () -> EntityType.Builder.of(Slammroot::new, AetherMobCategory.AETHER_DARKNESS_MONSTER).sized(2.0F, 2.0F).clientTrackingRange(16).build("slammroot"));
     public static final DeferredHolder<EntityType<?>, EntityType<AeronauticLeaper>> AERONAUTIC_LEAPER = ENTITY_TYPES.register("aeronautic_leaper", () -> EntityType.Builder.of(AeronauticLeaper::new, MobCategory.MONSTER).sized(2.0F, 2.0F).clientTrackingRange(16).build("aeronautic_leaper"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<MutatedAechorPlant>> MUTATED_AECHOR_PLANT = ENTITY_TYPES.register("mutated_aechor_plant", () -> EntityType.Builder.of(MutatedAechorPlant::new, MobCategory.MONSTER).sized(3.0F, 2.0F).clientTrackingRange(64).build("mutated_aechor_plant"));
@@ -49,9 +49,9 @@ public class AncientAetherEntityTypes {
         event.put(AncientAetherEntityTypes.MUTATED_AECHOR_PLANT.get(), MutatedAechorPlant.createMobAttributes().build());
     }
 
-    public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        event.register(AncientAetherEntityTypes.FLUFFALO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WyndcapsAnimal::checkWyndcapsAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-        event.register(AncientAetherEntityTypes.FESTIVE_SWET.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swet::checkSwetSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-        event.register(AncientAetherEntityTypes.SLAMMROOT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Slammroot::checkSlammrootSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(AncientAetherEntityTypes.FLUFFALO.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WyndcapsAnimal::checkWyndcapsAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(AncientAetherEntityTypes.FESTIVE_SWET.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swet::checkSwetSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(AncientAetherEntityTypes.SLAMMROOT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Slammroot::checkSlammrootSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
     }
 }

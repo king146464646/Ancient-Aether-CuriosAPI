@@ -1,5 +1,7 @@
 {
-  "egg": "ancient_aether:sakura_moa_egg",
+  "egg": {
+    "id": "ancient_aether:sakura_moa_egg"
+  },
   "max_jumps": 12,
   "moa_texture": "ancient_aether:textures/entity/mob/moa/sakura_moa.png",
   "saddle_texture": "aether:textures/entity/mobs/moa/moa_saddle.png",

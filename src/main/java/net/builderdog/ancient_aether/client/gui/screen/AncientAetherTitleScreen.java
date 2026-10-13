@@ -2,9 +2,10 @@ package net.builderdog.ancient_aether.client.gui.screen;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.client.gui.screen.menu.TitleScreenBehavior;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
+import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -14,6 +15,7 @@ import net.builderdog.ancient_aether.client.gui.component.AncientAetherMenuButto
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
@@ -32,14 +34,14 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unchecked")
 public class AncientAetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
-    private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
-    private static final ResourceLocation ANCIENT_AETHER_LOGO = new ResourceLocation(AncientAether.MODID, "textures/gui/title/ancient_aether.png");
-    private static final ResourceLocation THE_AETHER_LOGO = new ResourceLocation(AncientAether.MODID, "textures/gui/title/the_aether.png");
+    private static final ResourceLocation ANCIENT_AETHER_LOGO = ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/gui/title/ancient_aether.png");
+    private static final ResourceLocation THE_AETHER_LOGO = ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/gui/title/the_aether.png");
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
-    private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(AncientAether.MODID, "textures/gui/title/panorama/panorama")));
+    private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/gui/title/panorama/panorama")));
     private AncientAetherModUpdateIndicator modUpdateNotification;
     private boolean alignedLeft;
     private int rows;
+    private long fadeInStart = 0L;
 
     public AncientAetherTitleScreen() {
         ((TitleScreenAccessor) this).aether$setFading(true);
@@ -53,6 +55,7 @@ public class AncientAetherTitleScreen extends TitleScreen implements TitleScreen
     @Override
     protected void init() {
         super.init();
+        fadeInStart = 0L;
         setupButtons();
         modUpdateNotification = new AncientAetherModUpdateIndicator(this);
         modUpdateNotification.init();
@@ -97,7 +100,7 @@ public class AncientAetherTitleScreen extends TitleScreen implements TitleScreen
         if (minecraft != null && titleScreenAccessor.aether$getSplash() == null) {
             titleScreenAccessor.aether$setSplash(minecraft.getSplashManager().getSplash());
         }
-        float fadeAmount = TitleScreenBehavior.super.handleFading(guiGraphics, this, titleScreenAccessor, panorama, PANORAMA_OVERLAY, partialTicks);
+        float fadeAmount = handleFading(guiGraphics, partialTicks);
         float scale = getScale(this, getMinecraft());
 
         if (AncientAetherConfig.CLIENT.the_aether_title.get()) {
@@ -126,7 +129,7 @@ public class AncientAetherTitleScreen extends TitleScreen implements TitleScreen
             }
 
             if (alignedLeft) {
-                TitleScreenBehavior.super.renderRightBranding(guiGraphics, this, font, roundedFadeAmount);
+                renderRightBranding(guiGraphics, font, roundedFadeAmount);
             } else {
                 BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
                         guiGraphics.drawString(font, branding, 2, height - (10 + brandingLine * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
@@ -137,7 +140,7 @@ public class AncientAetherTitleScreen extends TitleScreen implements TitleScreen
             }
         }
 
-        int xOffset = TitleScreenBehavior.super.handleButtonVisibility(this, fadeAmount);
+        int xOffset = handleButtonVisibility(fadeAmount);
         for (Renderable renderable : renderables) {
             renderable.render(guiGraphics, mouseX, mouseY, partialTicks);
             if (renderable instanceof AncientAetherMenuButton ancientAetherButton) {
@@ -162,6 +165,40 @@ public class AncientAetherTitleScreen extends TitleScreen implements TitleScreen
         if (fadeAmount >= 1.0F) {
             modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
         }
+    }
+
+    private float handleFading(GuiGraphics guiGraphics, float partialTicks) {
+        if (fadeInStart == 0L) {
+            fadeInStart = Util.getMillis();
+        }
+        float fadeAmount = (float) (Util.getMillis() - fadeInStart) / 1000.0F;
+        panorama.render(guiGraphics, width, height, Mth.clamp(fadeAmount, 0.0F, 1.0F), partialTicks);
+        return Mth.clamp(fadeAmount - 1.0F, 0.0F, 1.0F);
+    }
+
+    private void renderRightBranding(GuiGraphics guiGraphics, Font font, int roundedFadeAmount) {
+        BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
+                guiGraphics.drawString(font, branding, width - font.width(branding) - 1, height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+        );
+        BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
+                guiGraphics.drawString(font, branding, 1, height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | roundedFadeAmount)
+        );
+    }
+
+    private int handleButtonVisibility(float fadeAmount) {
+        for (GuiEventListener guiEventListener : this.children()) {
+            if (guiEventListener instanceof AbstractWidget abstractWidget) {
+                if (fadeAmount > 0.02F) {
+                    if (!TitleScreenBehavior.isImageButton(abstractWidget.getMessage())) {
+                        abstractWidget.setAlpha(fadeAmount);
+                        abstractWidget.visible = true;
+                    }
+                } else {
+                    abstractWidget.visible = false;
+                }
+            }
+        }
+        return CumulusConfig.CLIENT.enable_menu_api.get() && CumulusConfig.CLIENT.enable_menu_list_button.get() ? -62 : 0;
     }
 
     private void setupLogo(GuiGraphics guiGraphics, float transparency, float scale) {

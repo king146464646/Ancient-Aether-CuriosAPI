@@ -24,8 +24,8 @@ public abstract class AncientAetherItemModelProvider extends AetherItemModelProv
 
     public void simpleItem(DeferredItem<Item> item) {
         withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated"))
-                .texture("layer0", new ResourceLocation(AncientAether.MODID, "item/" + item.getId().getPath()));
+                ResourceLocation.parse("item/generated"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "item/" + item.getId().getPath()));
     }
 
     public void itemBlockCopy(Block block, Block blockCopy) {
@@ -40,8 +40,8 @@ public abstract class AncientAetherItemModelProvider extends AetherItemModelProv
             String name = itemName(item) + "_" + material + "_trim";
             withExistingParent(name, mcLoc("item/generated"))
                     .texture("layer0", modLoc("item/" + location + itemName(item)))
-                    .texture("layer1", new ResourceLocation(Aether.MODID, "trims/items/gloves_trim_" + material));
-            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(getExistingFile(modLoc("item/" + name))).end();
+                    .texture("layer1", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "trims/items/gloves_trim_" + material));
+            builder.override().predicate(ResourceLocation.parse("trim_type"), (float) index).model(getExistingFile(modLoc("item/" + name))).end();
             index += 0.1;
         }
     }
@@ -83,7 +83,7 @@ public abstract class AncientAetherItemModelProvider extends AetherItemModelProv
 
     public void AAItemOverlayDungeonBlock(Block block, Block baseBlock, String overlay) {
         withExistingParent(blockName(block), mcLoc("block/cube"))
-                .texture("overlay", new ResourceLocation(Aether.MODID, "block/dungeon/" + overlay))
+                .texture("overlay", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/dungeon/" + overlay))
                 .texture("face", texture(blockName(baseBlock)))
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
                 .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").emissivity(15, 15).end().end()
@@ -100,8 +100,8 @@ public abstract class AncientAetherItemModelProvider extends AetherItemModelProv
 
     public void itemLockedAerogelBlock(Block block, Block baseBlock) {
         withExistingParent(blockName(block), mcLoc("block/cube"))
-                .texture("overlay", new ResourceLocation(Aether.MODID, "block/dungeon/lock"))
-                .texture("face", new ResourceLocation(Aether.MODID, "block/construction/" + blockName(baseBlock))).renderType("translucent")
+                .texture("overlay", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/dungeon/lock"))
+                .texture("face", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/construction/" + blockName(baseBlock))).renderType("translucent")
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
                 .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").emissivity(15, 15).end().end()
                 .transforms()
@@ -117,8 +117,8 @@ public abstract class AncientAetherItemModelProvider extends AetherItemModelProv
 
     public void itemBossDoorwayDungeonBlock(Block block, Block baseBlock) {
         withExistingParent(blockName(block), mcLoc("block/cube"))
-                .texture("overlay", new ResourceLocation(Aether.MODID, "block/dungeon/door"))
-                .texture("face", new ResourceLocation(Aether.MODID, "block/dungeon/" + blockName(baseBlock)))
+                .texture("overlay", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/dungeon/door"))
+                .texture("face", ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/dungeon/" + blockName(baseBlock)))
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
                 .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").emissivity(15, 15).end().end()
                 .transforms()

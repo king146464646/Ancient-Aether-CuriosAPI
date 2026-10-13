@@ -1,6 +1,6 @@
 package net.builderdog.ancient_aether.world.tree.decorator;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.builderdog.ancient_aether.block.blocktype.GrapeVineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,8 +11,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import org.jetbrains.annotations.NotNull;
 
 public class GrapeVineDecorator extends TreeDecorator {
-    public static final Codec<GrapeVineDecorator> CODEC =
-            BlockState.CODEC.fieldOf("block").xmap(GrapeVineDecorator::new, (instance) -> instance.state).codec();
+    public static final MapCodec<GrapeVineDecorator> CODEC =
+            BlockState.CODEC.fieldOf("block").xmap(GrapeVineDecorator::new, (instance) -> instance.state);
 
     private final BlockState state;
 

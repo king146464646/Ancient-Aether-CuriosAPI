@@ -1,6 +1,7 @@
 {
   "pack": {
     "description": "Changes base-mod textures to be more inlined with AA",
-    "pack_format": 22
+    "pack_format": 34,
+    "supported_formats": [34, 61]
   }
 }

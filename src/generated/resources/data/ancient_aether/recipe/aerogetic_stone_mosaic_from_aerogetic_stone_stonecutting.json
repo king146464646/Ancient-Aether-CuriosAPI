@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ancient_aether:aerogetic_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "ancient_aether:aerogetic_stone_mosaic"
+  }
+}

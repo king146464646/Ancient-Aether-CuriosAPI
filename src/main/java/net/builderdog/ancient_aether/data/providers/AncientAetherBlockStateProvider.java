@@ -268,7 +268,7 @@ public abstract class AncientAetherBlockStateProvider extends AetherBlockStatePr
     }
 
     public void lockedAerogelBlock(Block block, Block baseBlock) {
-        ConfiguredModel dungeonBlock = new ConfiguredModel(this.models().cubeAll(this.name(baseBlock), new ResourceLocation(Aether.MODID, "block/construction/" + name(baseBlock))));
+        ConfiguredModel dungeonBlock = new ConfiguredModel(this.models().cubeAll(this.name(baseBlock), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/construction/" + name(baseBlock))));
         this.getVariantBuilder(block).partialState().setModels(dungeonBlock);
     }
 
@@ -294,7 +294,7 @@ public abstract class AncientAetherBlockStateProvider extends AetherBlockStatePr
     }
 
     public void invisibleBlock(Block block, Block baseBlock) {
-        ModelFile visible = models().cubeAll(name(baseBlock), new ResourceLocation(Aether.MODID, "block/dungeon/" + name(baseBlock)));
+        ModelFile visible = models().cubeAll(name(baseBlock), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block/dungeon/" + name(baseBlock)));
         ModelFile invisible = models().getBuilder(name(block));
         getVariantBuilder(block).forAllStatesExcept((state) -> !(Boolean)state.getValue(DoorwayBlock.INVISIBLE) ? ConfiguredModel.builder().modelFile(visible).build() : ConfiguredModel.builder().modelFile(invisible).build());
     }
@@ -306,7 +306,7 @@ public abstract class AncientAetherBlockStateProvider extends AetherBlockStatePr
     }
 
     public void logWallBlock(WallBlock block, Block baseBlock, String location, String modid, boolean postUsesTop, ModelFile postBig, ModelFile postShort, ModelFile postTall, ModelFile side, ModelFile sideAlt, ModelFile sideTall, ModelFile sideTallAlt, ModelFile sideShort, ModelFile sideAltShort, ModelFile sideTallShort, ModelFile sideTallAltShort) {
-        logWallBlockInternal(block, name(block), new ResourceLocation(modid, "block/" + location + name(baseBlock)), postUsesTop, postBig, postShort, postTall, side, sideAlt, sideTall, sideTallAlt, sideShort, sideAltShort, sideTallShort, sideTallAltShort);
+        logWallBlockInternal(block, name(block), ResourceLocation.fromNamespaceAndPath(modid, "block/" + location + name(baseBlock)), postUsesTop, postBig, postShort, postTall, side, sideAlt, sideTall, sideTallAlt, sideShort, sideAltShort, sideTallShort, sideTallAltShort);
     }
 
     private void logWallBlockInternal(WallBlock block, String baseName, ResourceLocation texture, boolean postUsesTop, ModelFile postBig, ModelFile postShort, ModelFile postTall, ModelFile side, ModelFile sideAlt, ModelFile sideTall, ModelFile sideTallAlt, ModelFile sideShort, ModelFile sideAltShort, ModelFile sideTallShort, ModelFile sideTallAltShort) {

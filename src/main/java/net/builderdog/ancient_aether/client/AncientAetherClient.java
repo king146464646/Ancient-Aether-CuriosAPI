@@ -4,22 +4,18 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.cumulus.CumulusConfig;
 import net.builderdog.ancient_aether.AncientAetherConfig;
 import net.builderdog.ancient_aether.block.AncientAetherBlockSets;
-import net.builderdog.ancient_aether.client.event.listeners.HandRenderListener;
-import net.builderdog.ancient_aether.client.gui.AncientAetherMenus;
 import net.builderdog.ancient_aether.client.particle.AncientAetherParticleTypes;
 import net.builderdog.ancient_aether.client.renderer.AncientAetherRenderers;
 import net.minecraft.client.renderer.Sheets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import teamrazor.aeroblender.AeroBlenderConfig;
+import io.github.razordevs.aeroblender.AeroBlenderConfig;
 
 public class AncientAetherClient {
 
     public static void clientInit(IEventBus bus) {
         bus.addListener(AncientAetherClient::clientSetup);
 
-        AncientAetherMenus.MENUS.register(bus);
         AncientAetherClient.eventSetup(bus);
     }
 
@@ -30,8 +26,6 @@ public class AncientAetherClient {
             Sheets.addWoodType(AncientAetherBlockSets.SAKURA);
 
             if (AncientAetherConfig.CLIENT.config_overrides.get()) {
-                AetherConfig.CLIENT.enable_aether_menu_button.set(false);
-                AetherConfig.CLIENT.enable_aether_menu_button.save();
                 CumulusConfig.CLIENT.enable_menu_list_button.set(true);
                 CumulusConfig.CLIENT.enable_menu_list_button.save();
                 AetherConfig.COMMON.add_ruined_portal_automatically.set(true);
@@ -50,10 +44,6 @@ public class AncientAetherClient {
     }
 
     public static void eventSetup(IEventBus neoBus) {
-        IEventBus bus = NeoForge.EVENT_BUS;
-
-        HandRenderListener.listen(bus);
-
         neoBus.addListener(AncientAetherParticleTypes::registerParticleFactories);
         neoBus.addListener(AncientAetherRenderers::registerEntityRenderers);
         neoBus.addListener(AncientAetherRenderers::registerLayerDefinitions);

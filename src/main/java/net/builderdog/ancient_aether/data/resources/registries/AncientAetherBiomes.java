@@ -22,6 +22,6 @@ public class AncientAetherBiomes {
     public static final ResourceKey<Biome> ELEVATED_CAVERNS = createKey("elevated_caverns");
 
     private static ResourceKey<Biome> createKey(String name) {
-        return ResourceKey.create(Registries.BIOME, new ResourceLocation(AncientAether.MODID, name));
+        return ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
     }
 }

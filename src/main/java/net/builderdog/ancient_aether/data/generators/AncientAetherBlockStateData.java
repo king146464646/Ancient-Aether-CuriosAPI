@@ -49,15 +49,15 @@ public class AncientAetherBlockStateData extends AncientAetherBlockStateProvider
         logBlock((AncientAetherBlocks.AEROGETIC_STONE_MOSAIC.get()));
 
         axisBlock(AncientAetherBlocks.HIGHSPROOT_WOOD.get(), blockTexture(AncientAetherBlocks.HIGHSPROOT_LOG.get()), blockTexture(AncientAetherBlocks.HIGHSPROOT_LOG.get()));
-        axisBlock(AncientAetherBlocks.STRIPPED_HIGHSPROOT_LOG.get(),new ResourceLocation(AncientAether.MODID,"block/stripped_highsproot_log"),
-                new ResourceLocation(AncientAether.MODID,"block/stripped_highsproot_log_top"));
-        axisBlock(AncientAetherBlocks.STRIPPED_HIGHSPROOT_WOOD.get(),new ResourceLocation(AncientAether.MODID,"block/stripped_highsproot_log"),
-                new ResourceLocation(AncientAether.MODID,"block/stripped_highsproot_log"));
+        axisBlock(AncientAetherBlocks.STRIPPED_HIGHSPROOT_LOG.get(),ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_highsproot_log"),
+                ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_highsproot_log_top"));
+        axisBlock(AncientAetherBlocks.STRIPPED_HIGHSPROOT_WOOD.get(),ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_highsproot_log"),
+                ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_highsproot_log"));
         axisBlock(AncientAetherBlocks.SAKURA_WOOD.get(), blockTexture(AncientAetherBlocks.SAKURA_LOG.get()), blockTexture(AncientAetherBlocks.SAKURA_LOG.get()));
-        axisBlock(AncientAetherBlocks.STRIPPED_SAKURA_LOG.get(), new ResourceLocation(AncientAether.MODID,"block/stripped_sakura_log"),
-                new ResourceLocation(AncientAether.MODID,"block/stripped_sakura_log_top"));
-        axisBlock(AncientAetherBlocks.STRIPPED_SAKURA_WOOD.get(), new ResourceLocation(AncientAether.MODID,"block/stripped_sakura_log"),
-                new ResourceLocation(AncientAether.MODID,"block/stripped_sakura_log"));
+        axisBlock(AncientAetherBlocks.STRIPPED_SAKURA_LOG.get(), ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_sakura_log"),
+                ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_sakura_log_top"));
+        axisBlock(AncientAetherBlocks.STRIPPED_SAKURA_WOOD.get(), ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_sakura_log"),
+                ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "block/stripped_sakura_log"));
 
         simpleBlockItem(AncientAetherBlocks.HIGHSPROOT_LOG.get(), models().withExistingParent("ancient_aether:highsproot_log","minecraft:block/cube_column"));
         simpleBlockItem(AncientAetherBlocks.HIGHSPROOT_WOOD.get(), models().withExistingParent("ancient_aether:highsproot_wood","minecraft:block/cube_column"));

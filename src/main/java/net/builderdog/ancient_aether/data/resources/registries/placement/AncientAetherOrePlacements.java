@@ -5,7 +5,7 @@ import com.aetherteam.nitrogen.data.resources.builders.NitrogenPlacedFeatureBuil
 import net.builderdog.ancient_aether.data.resources.registries.features.AncientAetherOreFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -20,7 +20,7 @@ public class AncientAetherOrePlacements {
     public static final ResourceKey<PlacedFeature> BONUS_AMBROSIUM_ORE = AncientAetherPlacementUtils.createKey("bonus_ambrosium_ore");
     public static final ResourceKey<PlacedFeature> BONUS_GRAVITITE_ORE = AncientAetherPlacementUtils.createKey("bonus_gravitite_ore");
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         AncientAetherPlacementUtils.register(context, AEROGEL_BLOBS, configuredFeatures.getOrThrow(AncientAetherOreFeatures.AEROGEL_BLOBS),

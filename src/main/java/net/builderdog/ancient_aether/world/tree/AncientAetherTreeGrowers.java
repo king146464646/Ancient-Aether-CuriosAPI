@@ -37,7 +37,7 @@ public class AncientAetherTreeGrowers {
     public static final TreeGrower BLUE_SKYROOT_PINE_TREE = new TreeGrower(
             "blue_skyroot_pine",
             Optional.empty(),
-            Optional.of(ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation("aether_genesis", "blue_skyroot_pine"))),
+            Optional.of(ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("aether_genesis", "blue_skyroot_pine"))),
             Optional.empty()
     );
 

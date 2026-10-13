@@ -2,6 +2,7 @@ package net.builderdog.ancient_aether.world.structure.jigsaw;
 
 import com.aetherteam.aether.AetherTags;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.builderdog.ancient_aether.AncientAether;
 import net.builderdog.ancient_aether.world.structure.AncientAetherStructureTypes;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBinding;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -31,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BuriedJigsawStructure extends Structure {
-    public static final Codec<BuriedJigsawStructure> CODEC = RecordCodecBuilder.<BuriedJigsawStructure>mapCodec(instance ->
+    public static final MapCodec<BuriedJigsawStructure> CODEC = RecordCodecBuilder.<BuriedJigsawStructure>mapCodec(instance ->
             instance.group(BuriedJigsawStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -42,7 +44,7 @@ public class BuriedJigsawStructure extends Structure {
                     Codec.intRange(-4096, 4096).fieldOf("above_bottom").forGetter(structure -> structure.aboveBottom),
                     Codec.intRange(-4096, 4096).fieldOf("below_top").forGetter(structure -> structure.belowTop),
                     Codec.list(PoolAliasBinding.CODEC).optionalFieldOf("pool_aliases", List.of()).forGetter(structure -> structure.poolAliases)
-            ).apply(instance, BuriedJigsawStructure::new)).codec();
+            ).apply(instance, BuriedJigsawStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;
@@ -103,7 +105,9 @@ public class BuriedJigsawStructure extends Structure {
                 false,
                 projectStartToHeightmap,
                 maxDistanceFromCenter,
-                PoolAliasLookup.create(poolAliases, pos, context.seed())
+                PoolAliasLookup.create(poolAliases, pos, context.seed()),
+                JigsawStructure.DEFAULT_DIMENSION_PADDING,
+                JigsawStructure.DEFAULT_LIQUID_SETTINGS
         );
     }
 
@@ -135,7 +139,7 @@ public class BuriedJigsawStructure extends Structure {
                 generator.getBaseColumn(maxX, minZ, heightAccessor, random),
                 generator.getBaseColumn(maxX, maxZ, heightAccessor, random)
         };
-        int roomHeight = checkRoomHeight(templateManager, new ResourceLocation(AncientAether.MODID, "buried_jigsaw_spawn_radius"));
+        int roomHeight = checkRoomHeight(templateManager, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "buried_jigsaw_spawn_radius"));
         int height = heightAccessor.getMinBuildHeight();
         int maxHeight = heightAccessor.getMaxBuildHeight() - belowTop;
         int thickness = roomHeight + 16;

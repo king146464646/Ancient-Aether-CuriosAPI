@@ -1,107 +1,132 @@
 plugins {
     id 'java-library'
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'io.github.0ffz.github-packages' version '[1,2)'
-    id 'net.neoforged.gradle.userdev' version '7.0.97'
+    id 'net.neoforged.moddev' version "${moddevgradle_version}"
 }
 
-version = mod_version
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = "${minecraft_version}-${mod_version}-neoforge"
 group = mod_group_id
-
-repositories {
-    mavenLocal()
-}
 
 base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+neoForge {
+    version = project.neo_version
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
+    runs {
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            systemProperty 'forge.logging.console.level', 'debug'
+            logLevel = org.slf4j.event.Level.INFO
+        }
 
-        modSource project.sourceSets.main
+        client {
+            client()
+            systemProperty 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        server {
+            server()
+            systemProperty 'forge.enabledGameTestNamespaces', mod_id
+            programArgument '--nogui'
+        }
+
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing', file('src/generated/resources/').getAbsolutePath(), '--existing-mod', 'aether', '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
+        }
     }
 
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing-mod', 'aether'
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+processResources {
+    exclude '.cache/'
+}
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
-repositories {
-    maven githubPackage.invoke("The-Aether-Team/The-Aether")
-    maven githubPackage.invoke("The-Aether-Team/Nitrogen")
-    maven githubPackage.invoke("The-Aether-Team/Cumulus")
-
-    maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = 'https://maven.minecraftforge.net/' }
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-    flatDir {
-        dir 'libs'
-    }
-    mavenCentral()
-}
-
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
     implementation "com.aetherteam.aether:aether:${project.aether_version}"
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
     implementation "com.github.glitchfiend:TerraBlender-neoforge:${project.terrablender_version}"
-    implementation "local:aeroblender:1.20.4-1.0.1-neoforge"
-    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
+    implementation "maven.modrinth:aeroblender:${project.aeroblender_version}"
 }
 
-tasks.withType(ProcessResources).configureEach {
+repositories {
+    // The Aether (Curios API fork) is published to mavenLocal by CI before this build runs.
+    // Must come first so this resolves to the local fork instead of the official Aether maven.
+    mavenLocal()
+    maven { url = "https://packages.aether-mod.net/The-Aether" }
+    maven { url = "https://packages.aether-mod.net/Nitrogen" }
+    maven { url = "https://packages.aether-mod.net/Cumulus" }
+    maven { url = "https://maven.theillusivec4.top/" }
+    maven { url = "https://api.modrinth.com/maven" }
+    maven { url = "https://maven.blamejared.com" }
+    maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_version            : mod_version,
+            mod_license            : mod_license,
+            mod_url                : mod_url,
+            mod_update             : mod_update,
+            mod_tracker            : mod_tracker,
+            mod_credits            : mod_credits,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
             neo_version            : neo_version,
             neo_version_range      : neo_version_range,
             loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description
+            aether_version         : aether_version,
+            aether_version_range   : aether_version_range,
+            curios_version         : curios_version,
+            curios_version_range   : curios_version_range,
+            terrablender_version_range: terrablender_version_range,
+            aeroblender_version_range : aeroblender_version_range
     ]
     inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
-    filesMatching(['META-INF/mods.toml']) {
-        expand replaceProperties
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 publishing {
@@ -115,8 +140,4 @@ publishing {
             url "file://${project.projectDir}/repo"
         }
     }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
 }

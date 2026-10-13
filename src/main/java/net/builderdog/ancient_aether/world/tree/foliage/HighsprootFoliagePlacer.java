@@ -1,6 +1,6 @@
 package net.builderdog.ancient_aether.world.tree.foliage;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 import org.jetbrains.annotations.NotNull;
 
 public class HighsprootFoliagePlacer extends FoliagePlacer {
-    public static final Codec<HighsprootFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) -> foliagePlacerParts(instance)
+    public static final MapCodec<HighsprootFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec((instance) -> foliagePlacerParts(instance)
             .apply(instance, HighsprootFoliagePlacer::new));
 
     public HighsprootFoliagePlacer(IntProvider radius, IntProvider offset) {

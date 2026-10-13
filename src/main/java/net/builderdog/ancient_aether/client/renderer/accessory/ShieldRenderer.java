@@ -1,6 +1,8 @@
 package net.builderdog.ancient_aether.client.renderer.accessory;
 
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
+import com.aetherteam.aether.client.renderer.accessory.FirstPersonRendering;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -26,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class ShieldRenderer implements ICurioRenderer {
+public class ShieldRenderer implements ICurioRenderer, FirstPersonRendering {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
@@ -59,8 +61,21 @@ public class ShieldRenderer implements ICurioRenderer {
 
         ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
-        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false);
+        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+    }
+
+    @Override
+    public boolean shouldRenderInFirstPerson(HumanoidArm arm, ItemStack stack, SlotContext slotContext) {
+        return !(slotContext.entity() instanceof Player player) || !player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak();
+    }
+
+    @Override
+    public <M extends LivingEntity> void renderOnFirstPerson(HumanoidArm arm, ItemStack stack, SlotContext slotContext, PoseStack matrices, EntityModel<M> model, MultiBufferSource buffer, int light) {
+        LivingEntity livingEntity = slotContext.entity();
+        if (livingEntity instanceof AbstractClientPlayer player) {
+            this.renderFirstPerson(stack, matrices, buffer, light, player, arm);
+        }
     }
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
@@ -74,7 +89,7 @@ public class ShieldRenderer implements ICurioRenderer {
     private void setupShieldOnHand(ItemStack stack, HumanoidModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm, boolean isSlim) {
         setupModel(model, player);
         ShieldAccessoryItem shield = (ShieldAccessoryItem) stack.getItem();
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(shield.getShieldTexture()), false, stack.isEnchanted());
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(shield.getShieldTexture()), stack.isEnchanted());
         if (isSlim) {
             poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
         }
@@ -110,7 +125,7 @@ public class ShieldRenderer implements ICurioRenderer {
     private void renderShieldOnHand(ModelPart shieldArm, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
         shieldArm.visible = true;
         shieldArm.xRot = 0.0F;
-        shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     private void renderHand(ModelPart dummyArm, ModelPart dummySleeve, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
@@ -118,7 +133,7 @@ public class ShieldRenderer implements ICurioRenderer {
         dummySleeve.visible = true;
         dummyArm.xRot = 0.0F;
         dummySleeve.xRot = 0.0F;
-        dummyArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        dummySleeve.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        dummyArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+        dummySleeve.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 }

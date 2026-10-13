@@ -3,14 +3,15 @@ package net.builderdog.ancient_aether.item.equipment.accessories.rings;
 import com.aetherteam.aether.item.accessories.ring.RingItem;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.builderdog.ancient_aether.AncientAether;
 import net.builderdog.ancient_aether.client.AncientAetherSoundEvents;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
-
-import java.util.UUID;
 
 public class HermesRingItem extends RingItem {
 
@@ -19,9 +20,9 @@ public class HermesRingItem extends RingItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext context, UUID uuid, ItemStack stack) {
-            Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
-            attributes.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Hermes Ring Ability", 0.03, AttributeModifier.Operation.MULTIPLY_TOTAL));
-            return attributes;
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext context, ResourceLocation id, ItemStack stack) {
+        Multimap<Holder<Attribute>, AttributeModifier> attributes = HashMultimap.create();
+        attributes.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "hermes_ring_ability"), 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        return attributes;
     }
 }

@@ -171,7 +171,7 @@ public class AncientAetherRecipeData extends AncientAetherRecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AncientAetherItems.VALKYRUM_LANCE.get())
-                .define('#', Tags.Items.RODS_WOODEN)
+                .define('#', AetherTags.Items.SKYROOT_STICKS)
                 .define('X', AncientAetherItems.VALKYRUM.get())
                 .pattern("X  ")
                 .pattern(" X ")

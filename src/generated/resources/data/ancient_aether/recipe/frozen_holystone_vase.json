@@ -1,0 +1,13 @@
+{
+  "type": "aether:freezing",
+  "category": "freezable_blocks",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "ancient_aether:holystone_vase"
+  },
+  "result": {
+    "count": 1,
+    "id": "ancient_aether:frozen_holystone_vase"
+  }
+}

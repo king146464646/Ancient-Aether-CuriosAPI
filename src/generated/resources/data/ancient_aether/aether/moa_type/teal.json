@@ -1,5 +1,7 @@
 {
-  "egg": "ancient_aether:teal_moa_egg",
+  "egg": {
+    "id": "ancient_aether:teal_moa_egg"
+  },
   "max_jumps": 6,
   "moa_texture": "ancient_aether:textures/entity/mob/moa/teal_moa.png",
   "saddle_texture": "aether:textures/entity/mobs/moa/moa_saddle.png",

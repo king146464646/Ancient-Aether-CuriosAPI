@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ancient_aether:aeronautic_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "ancient_aether:corrupted_aeronautic_stone"
+  }
+}

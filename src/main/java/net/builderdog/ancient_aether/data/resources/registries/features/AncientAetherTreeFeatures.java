@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import net.builderdog.ancient_aether.data.resources.AncientAetherFeatureStates;
 import net.builderdog.ancient_aether.data.resources.builders.AncientAetherFeatureBuilders;
 import net.builderdog.ancient_aether.world.tree.decorator.GrapeVineDecorator;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -36,7 +36,7 @@ public class AncientAetherTreeFeatures extends AncientAetherFeatureBuilders {
     public static final ResourceKey<ConfiguredFeature<?, ?>> FANCY_ENCHANTED_SKYROOT_TREE = AncientAetherFeatureUtils.registerKey("fancy_enchanted_skyroot_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WYNDCAPS_HOLIDAY_TREE = AncientAetherFeatureUtils.registerKey("wyndcaps_holiday_tree");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         AncientAetherFeatureUtils.register(context, SKYROOT_TREE_VINED, Feature.TREE, createStraightSkyrootBlobTree(AetherFeatureStates.SKYROOT_LEAVES).decorators(ImmutableList.of(new GrapeVineDecorator(AncientAetherFeatureStates.GRAPE_VINE))).build());
         AncientAetherFeatureUtils.register(context, CRYSTAL_SKYROOT_TREE, Feature.TREE, createStraightSkyrootBlobTree(AncientAetherFeatureStates.CRYSTAL_SKYROOT_LEAVES).build());
         AncientAetherFeatureUtils.register(context, ENCHANTED_SKYROOT_TREE, Feature.TREE, createStraightSkyrootBlobTree(AncientAetherFeatureStates.ENCHANTED_SKYROOT_LEAVES).build());

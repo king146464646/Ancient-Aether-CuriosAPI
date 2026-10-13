@@ -1,11 +1,12 @@
 package net.builderdog.ancient_aether.item;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.item.components.DungeonKind;
 import com.aetherteam.aether.item.food.GummySwetItem;
-import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import net.builderdog.ancient_aether.AncientAether;
 import net.builderdog.ancient_aether.block.AncientAetherBlocks;
@@ -53,8 +54,8 @@ public class AncientAetherItems {
     public static final DeferredItem<Item> VALKYRIE_CLAY_BALL = ITEMS.register("valkyrie_clay_ball", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> VALKYRIE_BRICK = ITEMS.register("valkyrie_brick", () -> new Item(new Item.Properties()));
 
-    public static final DeferredItem<Item> GRAPES = ITEMS.register("grapes", () -> new ItemNameBlockItem(AncientAetherBlocks.GRAPE_VINE.get(), (new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.6F).build()))));
-    public static final DeferredItem<Item> SLAMMBERRY = ITEMS.register("slammberry", () -> new SlammrootFruitItem(new Item.Properties().food((new FoodProperties.Builder()).alwaysEat().effect(() -> new MobEffectInstance(AncientAetherEffects.NATURES_BOOST.get(), 60, 0), 1.0F).build())));
+    public static final DeferredItem<Item> GRAPES = ITEMS.register("grapes", () -> new ItemNameBlockItem(AncientAetherBlocks.GRAPE_VINE.get(), (new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.6F).build()))));
+    public static final DeferredItem<Item> SLAMMBERRY = ITEMS.register("slammberry", () -> new SlammrootFruitItem(new Item.Properties().food((new FoodProperties.Builder()).alwaysEdible().effect(() -> new MobEffectInstance(AncientAetherEffects.NATURES_BOOST, 60, 0), 1.0F).build())));
     public static final DeferredItem<Item> FESTIVE_GUMMY_SWET = ITEMS.register("festive_gummy_swet", GummySwetItem::new);
 
     public static final DeferredItem<SwordItem> VALKYRUM_SWORD = ITEMS.register("valkyrum_sword", ValkyrumSwordItem::new);
@@ -69,10 +70,10 @@ public class AncientAetherItems {
     public static final DeferredItem<AxeItem> DIVINE_AXE = ITEMS.register("divine_axe", DivineAxeItem::new);
     public static final DeferredItem<HoeItem> DIVINE_HOE = ITEMS.register("divine_hoe", DivineHoeItem::new);
 
-    public static final DeferredItem<Item> VALKYRUM_HELMET = ITEMS.register("valkyrum_helmet", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> VALKYRUM_CHESTPLATE = ITEMS.register("valkyrum_chestplate", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final DeferredItem<Item> VALKYRUM_LEGGINGS = ITEMS.register("valkyrum_leggings", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-    public static final DeferredItem<Item> VALKYRUM_BOOTS = ITEMS.register("valkyrum_boots", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final DeferredItem<Item> VALKYRUM_HELMET = ITEMS.register("valkyrum_helmet", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.HELMET, new Item.Properties().durability(AncientAetherArmorTiers.durabilityFor(ArmorItem.Type.HELMET))));
+    public static final DeferredItem<Item> VALKYRUM_CHESTPLATE = ITEMS.register("valkyrum_chestplate", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(AncientAetherArmorTiers.durabilityFor(ArmorItem.Type.CHESTPLATE))));
+    public static final DeferredItem<Item> VALKYRUM_LEGGINGS = ITEMS.register("valkyrum_leggings", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(AncientAetherArmorTiers.durabilityFor(ArmorItem.Type.LEGGINGS))));
+    public static final DeferredItem<Item> VALKYRUM_BOOTS = ITEMS.register("valkyrum_boots", () -> new AncientAetherArmorItem(AncientAetherArmorTiers.VALKYRUM, ArmorItem.Type.BOOTS, new Item.Properties().durability(AncientAetherArmorTiers.durabilityFor(ArmorItem.Type.BOOTS))));
     public static final DeferredItem<Item> VALKYRUM_GLOVES = ITEMS.register("valkyrum_gloves", () -> new GlovesItem(AncientAetherArmorTiers.VALKYRUM, 1.0, "valkyrum_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, new Item.Properties().stacksTo(1).durability(1561)));
 
     public static final DeferredItem<SwordItem> ANCIENT_SWORD = ITEMS.register("ancient_sword", AncientSwordItem::new);
@@ -91,8 +92,8 @@ public class AncientAetherItems {
     public static final DeferredItem<Item> ANCIENT_PENDANT = ITEMS.register("ancient_pendant", () -> new AncientPendantItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> PINK_CAPE = ITEMS.register("pink_cape", () -> new CapeItem("pink_cape", new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> SHIELD_OF_INEBRIATION = ITEMS.register("shield_of_inebriation", () -> new ShieldAccessoryItem(new Item.Properties().stacksTo(1), new ResourceLocation(AncientAether.MODID, "shield_of_inebriation")));
-    public static final DeferredItem<Item> SHIELD_OF_REMEDIATION = ITEMS.register("shield_of_remediation", () -> new ShieldOfRemediationItem(new Item.Properties().stacksTo(1), new ResourceLocation(AncientAether.MODID, "shield_of_remediation")));
+    public static final DeferredItem<Item> SHIELD_OF_INEBRIATION = ITEMS.register("shield_of_inebriation", () -> new ShieldAccessoryItem(new Item.Properties().stacksTo(1), ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "shield_of_inebriation")));
+    public static final DeferredItem<Item> SHIELD_OF_REMEDIATION = ITEMS.register("shield_of_remediation", () -> new ShieldOfRemediationItem(new Item.Properties().stacksTo(1), ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "shield_of_remediation")));
     public static final DeferredItem<Item> STRENGTH_STONE = ITEMS.register("strength_stone", () -> new StrengthStoneItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> WYND_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.register("wynd_armor_trim_smithing_template", () -> SmithingTemplateItem.createArmorTrimTemplate(AncientAetherTrimPatterns.WYND));
@@ -106,8 +107,8 @@ public class AncientAetherItems {
     public static final DeferredItem<Item> ANCIENT_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.register("ancient_armor_trim_smithing_template", () -> SmithingTemplateItem.createArmorTrimTemplate(AncientAetherTrimPatterns.ANCIENT));
 
     public static final DeferredItem<Item> ANCIENT_RUNE = ITEMS.register("ancient_rune", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> LABORATORY_DUNGEON_KEY = ITEMS.register("laboratory_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(AncientAether.MODID, "laboratory"), new Item.Properties().stacksTo(1).fireResistant()));
-    public static final DeferredItem<Item> ANCIENT_DUNGEON_KEY = ITEMS.register("ancient_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(AncientAether.MODID, "ancient"), new Item.Properties().stacksTo(1).fireResistant()));
+    public static final DeferredItem<Item> LABORATORY_DUNGEON_KEY = ITEMS.register("laboratory_dungeon_key", () -> new Item(new Item.Properties().stacksTo(1).fireResistant().component(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "laboratory")))));
+    public static final DeferredItem<Item> ANCIENT_DUNGEON_KEY = ITEMS.register("ancient_dungeon_key", () -> new Item(new Item.Properties().stacksTo(1).fireResistant().component(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "ancient")))));
 
     public static final DeferredItem<Item> HIGHSPROOT_BOAT = ITEMS.register("highsproot_boat", () -> new AncientAetherBoatItem(false, new Item.Properties().stacksTo(1), AncientAetherBoat.Type.HIGHLANDS_PINE));
     public static final DeferredItem<Item> HIGHSPROOT_CHEST_BOAT = ITEMS.register("highsproot_chest_boat", () -> new AncientAetherBoatItem(true, new Item.Properties().stacksTo(1),  AncientAetherBoat.Type.HIGHLANDS_PINE));

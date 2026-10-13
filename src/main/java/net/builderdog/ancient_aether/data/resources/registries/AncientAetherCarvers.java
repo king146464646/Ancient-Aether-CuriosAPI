@@ -4,7 +4,7 @@ import net.builderdog.ancient_aether.AncientAether;
 import net.builderdog.ancient_aether.AncientAetherTags;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformFloat;
@@ -21,7 +21,7 @@ public class AncientAetherCarvers {
     public static final ResourceKey<ConfiguredWorldCarver<?>> AETHER_CAVE_SAKURA = createKey("aether_cave_sakura");
 
     private static ResourceKey<ConfiguredWorldCarver<?>> createKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_CARVER, new ResourceLocation(AncientAether.MODID, name));
+        return ResourceKey.create(Registries.CONFIGURED_CARVER, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
     }
 
     private static ConfiguredWorldCarver<?> createBaseAetherCave(HolderGetter<Block> blocks, float probability, int minHeight) {
@@ -38,7 +38,7 @@ public class AncientAetherCarvers {
         return new ConfiguredWorldCarver<>(WorldCarver.CAVE, config);
     }
 
-    public static void bootstrap(BootstapContext<ConfiguredWorldCarver<?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> context) {
         HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
         context.register(AETHER_CAVE, createBaseAetherCave(blocks, 0.15F, 72));
         context.register(AETHER_CAVE_ELEVATED, createBaseAetherCave(blocks, 0.15F, 88));

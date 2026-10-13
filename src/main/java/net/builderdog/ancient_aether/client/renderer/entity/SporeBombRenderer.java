@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 
 public class SporeBombRenderer extends EntityRenderer<SporeBomb> {
-    private static final ResourceLocation SPORE_BOMB_TEXTURE = new ResourceLocation("ancient_aether", "textures/entity/projectile/spore_bomb.png");
+    private static final ResourceLocation SPORE_BOMB_TEXTURE = ResourceLocation.fromNamespaceAndPath("ancient_aether", "textures/entity/projectile/spore_bomb.png");
     private final ModelPart sporeBomb;
 
     public SporeBombRenderer(EntityRendererProvider.Context context) {
@@ -32,7 +32,7 @@ public class SporeBombRenderer extends EntityRenderer<SporeBomb> {
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, sporeBomb.xRotO, sporeBomb.getXRot()) + 180.0F));
         poseStack.translate(0.0, -1.5, 0.0);
         VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(getTextureLocation(sporeBomb)));
-        this.sporeBomb.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.sporeBomb.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
         super.render(sporeBomb, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

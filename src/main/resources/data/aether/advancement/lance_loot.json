@@ -1,0 +1,29 @@
+{
+  "parent": "aether:bronze_dungeon",
+  "criteria": {
+    "lance_loot": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.lance_loot.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "id": "aether:valkyrie_lance"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.lance_loot"
+    }
+  },
+  "requirements": [
+    [
+      "lance_loot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

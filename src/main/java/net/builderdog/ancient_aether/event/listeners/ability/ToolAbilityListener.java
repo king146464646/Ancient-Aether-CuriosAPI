@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
@@ -21,8 +21,8 @@ public class ToolAbilityListener {
 
     public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
         BlockState oldState = event.getState();
-        ToolAction toolAction = event.getToolAction();
-        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(oldState, toolAction);
+        ItemAbility itemAbility = event.getItemAbility();
+        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(oldState, itemAbility);
         if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
             event.setFinalState(newState);
         }

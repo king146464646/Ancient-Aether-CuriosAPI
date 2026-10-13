@@ -119,8 +119,8 @@ public class AncientAetherCreativeModeTabs {
             putAfter(event, AetherBlocks.AMBROSIUM_ORE.get(), AncientAetherBlocks.AETHER_QUARTZ_ORE.get());
             putAfter(event, AetherBlocks.GRAVITITE_ORE.get(), AncientAetherBlocks.VALKYRUM_ORE.get());
             putAfter(event, AncientAetherBlocks.VALKYRUM_ORE.get(), AetherBlocks.AEROGEL.get());
-            event.getEntries().putAfter(new ItemStack(AetherBlocks.GOLDEN_OAK_LOG.get()), new ItemStack(AncientAetherBlocks.HIGHSPROOT_LOG.get()), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
-            event.getEntries().putAfter(new ItemStack(AncientAetherBlocks.HIGHSPROOT_LOG.get()), new ItemStack(AncientAetherBlocks.SAKURA_LOG.get()), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
+            putAfter(event, AetherBlocks.GOLDEN_OAK_LOG.get(), AncientAetherBlocks.HIGHSPROOT_LOG.get(), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
+            putAfter(event, AncientAetherBlocks.HIGHSPROOT_LOG.get(), AncientAetherBlocks.SAKURA_LOG.get(), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
             putAfter(event, AetherBlocks.GOLDEN_OAK_LEAVES.get(), AncientAetherBlocks.SKYROOT_PINE_LEAVES.get());
             putAfter(event, AetherBlocks.SKYROOT_LEAVES.get(), AncientAetherBlocks.CRYSTAL_SKYROOT_LEAVES.get());
             putAfter(event, AncientAetherBlocks.CRYSTAL_SKYROOT_LEAVES.get(), AncientAetherBlocks.ENCHANTED_SKYROOT_LEAVES.get());
@@ -168,7 +168,7 @@ public class AncientAetherCreativeModeTabs {
         if (tab == AetherCreativeTabs.AETHER_REDSTONE_BLOCKS.get()) {
             putAfter(event, AetherBlocks.INCUBATOR.get(), AncientAetherBlocks.WIND_BLOWER.get());
             putBefore(event, AetherBlocks.ALTAR.get(), AncientAetherBlocks.FLUFFALO_WOOL.get());
-            event.getEntries().putAfter(new ItemStack(AncientAetherBlocks.SLIDER_PROTOTYPE.get()), new ItemStack(AncientAetherBlocks.SLIDER_PROTOTYPE.get()), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
+            putAfter(event, AncientAetherBlocks.SLIDER_PROTOTYPE.get(), AncientAetherBlocks.SLIDER_PROTOTYPE.get(), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
         }
 
         if (tab == AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES.get()) {
@@ -272,7 +272,7 @@ public class AncientAetherCreativeModeTabs {
 
         if (tab == AetherCreativeTabs.AETHER_SPAWN_EGGS.get()) {
             remove(event, AetherItems.WHITE_MOA_EGG.get());
-            event.getEntries().putFirst(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertFirst(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             putAfter(event, AetherItems.WHITE_MOA_EGG.get(), AncientAetherItems.TURQUOISE_MOA_EGG.get());
             putAfter(event, AncientAetherItems.TURQUOISE_MOA_EGG.get(), AncientAetherItems.TEAL_MOA_EGG.get());
             putAfter(event, AncientAetherItems.TEAL_MOA_EGG.get(), AncientAetherItems.SKY_BLUE_MOA_EGG.get());
@@ -288,14 +288,28 @@ public class AncientAetherCreativeModeTabs {
     }
 
     public static void remove(BuildCreativeModeTabContentsEvent event, ItemLike entry) {
-        event.getEntries().remove(new ItemStack(entry));
+        event.remove(new ItemStack(entry), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
     public static void putBefore(BuildCreativeModeTabContentsEvent event, ItemLike beforeEntry, ItemLike entry) {
-        event.getEntries().putBefore(new ItemStack(beforeEntry), new ItemStack(entry), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        putBefore(event, beforeEntry, entry, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
     public static void putAfter(BuildCreativeModeTabContentsEvent event, ItemLike afterEntry, ItemLike entry) {
-        event.getEntries().putAfter(new ItemStack(afterEntry), new ItemStack(entry), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        putAfter(event, afterEntry, entry, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+    }
+
+    public static void putBefore(BuildCreativeModeTabContentsEvent event, ItemLike beforeEntry, ItemLike entry, CreativeModeTab.TabVisibility visibility) {
+        try {
+            event.insertBefore(new ItemStack(beforeEntry), new ItemStack(entry), visibility);
+        } catch (IllegalArgumentException ignored) {
+        }
+    }
+
+    public static void putAfter(BuildCreativeModeTabContentsEvent event, ItemLike afterEntry, ItemLike entry, CreativeModeTab.TabVisibility visibility) {
+        try {
+            event.insertAfter(new ItemStack(afterEntry), new ItemStack(entry), visibility);
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 }

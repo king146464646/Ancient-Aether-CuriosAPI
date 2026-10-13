@@ -5,6 +5,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import net.builderdog.ancient_aether.block.AncientAetherBlocks;
 import net.builderdog.ancient_aether.data.providers.AncientAetherBlockLootSubProvider;
 import net.builderdog.ancient_aether.item.AncientAetherItems;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -16,8 +17,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AncientAetherBlockLoot extends AncientAetherBlockLootSubProvider {
-    public AncientAetherBlockLoot() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public AncientAetherBlockLoot(HolderLookup.Provider registries) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     @Override

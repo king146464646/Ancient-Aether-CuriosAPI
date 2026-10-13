@@ -5,11 +5,10 @@ import net.builderdog.ancient_aether.client.AncientAetherSoundEvents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,9 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -54,13 +53,13 @@ public class AeronauticLeaper extends Slime {
 				.add(Attributes.MAX_HEALTH, 10.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.8)
 				.add(Attributes.ATTACK_DAMAGE, 6.0)
-				.add(NeoForgeMod.ENTITY_GRAVITY.value(), 0.025);
+				.add(Attributes.GRAVITY, 0.025);
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(DATA_AWAKE_ID, false);
+	protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_AWAKE_ID, false);
 	}
 
 	@Override
@@ -99,7 +98,7 @@ public class AeronauticLeaper extends Slime {
 
 	@Override
 	public @Nullable
-	SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+	SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 		setSize(1, true);
 		setLeftHanded(false);
 		return spawnData;
@@ -107,7 +106,7 @@ public class AeronauticLeaper extends Slime {
 
 	@Nonnull
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
+	protected ResourceKey<LootTable> getDefaultLootTable() {
 		return getType().getDefaultLootTable();
 	}
 
@@ -145,8 +144,8 @@ public class AeronauticLeaper extends Slime {
 
 	@Nonnull
 	@Override
-	public EntityDimensions getDimensions(@NotNull Pose pose) {
-		return super.getDimensions(pose).scale(2 * 0.879F);
+	public EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
+		return super.getDefaultDimensions(pose).scale(2 * 0.879F);
 	}
 
 	@Nonnull
@@ -167,7 +166,7 @@ public class AeronauticLeaper extends Slime {
 		return true;
 	}
 
-	protected void jumpFromGround() {
+	public void jumpFromGround() {
 		if(isAwake()) {
 			Vec3 vec3 = getDeltaMovement();
 			setDeltaMovement(vec3.x, 0.25, vec3.z);

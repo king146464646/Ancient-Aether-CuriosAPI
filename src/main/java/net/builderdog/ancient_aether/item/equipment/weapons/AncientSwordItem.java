@@ -5,6 +5,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class AncientSwordItem extends SwordItem {
     public AncientSwordItem() {
-        super(AncientAetherItemTiers.ANCIENT, 3, -2F, new Properties());
+        super(AncientAetherItemTiers.ANCIENT, new Properties()
+            .attributes(SwordItem.createAttributes(AncientAetherItemTiers.ANCIENT, 3, -2F)));
     }
 }

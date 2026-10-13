@@ -33,7 +33,7 @@ public class EntityHooks {
         if (EquipmentUtil.hasShieldOfInebriation(player)) {
             if (!(attacker == null)) {
                 if (RandomSource.create().nextInt(1) == 0) {
-                    attacker.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 200, 0, false, false, true));
+                    attacker.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 200, 0, false, false, true));
                 }
             }
         }

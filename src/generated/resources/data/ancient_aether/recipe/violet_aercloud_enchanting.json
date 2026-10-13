@@ -1,0 +1,13 @@
+{
+  "type": "aether:enchanting",
+  "category": "enchanting_blocks",
+  "cookingtime": 400,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "aether:blue_aercloud"
+  },
+  "result": {
+    "count": 1,
+    "id": "ancient_aether:violet_aercloud"
+  }
+}

@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -36,7 +36,7 @@ public class AncientAetherMiscPlacements {
     public static final ResourceKey<PlacedFeature> ELEVATED_CRYSTAL_ISLAND = AncientAetherPlacementUtils.createKey("elevated_crystal_island");
     public static final ResourceKey<PlacedFeature> BRONZE_DUNGEON_ENTRANCE = AncientAetherPlacementUtils.createKey("bronze_dungeon_entrance");
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         AncientAetherPlacementUtils.register(context, QUICKSOIL_COAST, configuredFeatures.getOrThrow(AncientAetherMiscFeatures.COAST_QUICKSOIL),

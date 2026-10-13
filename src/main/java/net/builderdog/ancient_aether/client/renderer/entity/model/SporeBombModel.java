@@ -33,7 +33,7 @@ public class SporeBombModel<T extends SporeBomb> extends EntityModel<T> {
     public void setupAnim(@NotNull SporeBomb entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
     @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        sporeBomb.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        sporeBomb.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class RemedyCrystalRenderer<T extends RemedyCrystal> extends AbstractCrystalRenderer<T> {
-    private static final ResourceLocation REMEDY_CRYSTAL_TEXTURE = new ResourceLocation(AncientAether.MODID, "textures/entity/projectile/remedy_crystal.png");
+    private static final ResourceLocation REMEDY_CRYSTAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, "textures/entity/projectile/remedy_crystal.png");
 
     public RemedyCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new CrystalModel<>(context.bakeLayer(AncientAetherModelLayers.REMEDY_CRYSTAL)));

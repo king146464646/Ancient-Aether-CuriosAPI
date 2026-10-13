@@ -7,8 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -28,7 +27,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.EventHooks;
@@ -78,13 +79,13 @@ public class Slammroot extends Slime {
 
     @Override
     public @Nullable
-    SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnData, @javax.annotation.Nullable CompoundTag tag) {
+    SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnData) {
         setSize(1, true);
         setLeftHanded(false);
         return spawnData;
     }
 
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         Vec3 vec3 = getDeltaMovement();
         setDeltaMovement(vec3.x, 0.75F, vec3.z);
         hasImpulse = true;
@@ -117,7 +118,9 @@ public class Slammroot extends Slime {
         if (isAlive()) {
             int i = getSize();
             if (distanceToSqr(entity) < 1.2D * (double)i * 1.2D * (double)i && hasLineOfSight(entity) && entity.hurt(damageSources().mobAttack(this), getAttackDamage())) {
-                doEnchantDamageEffects(this, entity);
+                if (level() instanceof ServerLevel serverLevel) {
+                    EnchantmentHelper.doPostAttackEffects(serverLevel, entity, damageSources().mobAttack(this));
+                }
             }
         }
     }
@@ -125,7 +128,7 @@ public class Slammroot extends Slime {
     public void aiStep() {
         super.aiStep();
         if (!level().isClientSide) {
-            if (!EventHooks.getMobGriefingEvent(this.level(), this)) {
+            if (!EventHooks.canEntityGrief(this.level(), this)) {
                 return;
             }
 
@@ -180,8 +183,8 @@ public class Slammroot extends Slime {
 
     @Nonnull
     @Override
-    public EntityDimensions getDimensions(@NotNull Pose pose) {
-        return super.getDimensions(pose).scale(2 * 0.879F);
+    public EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
+        return super.getDefaultDimensions(pose).scale(2 * 0.879F);
     }
 
     @Override
@@ -203,7 +206,7 @@ public class Slammroot extends Slime {
 
     @Nonnull
     @Override
-    protected ResourceLocation getDefaultLootTable() {
+    protected ResourceKey<LootTable> getDefaultLootTable() {
         return getType().getDefaultLootTable();
     }
 }

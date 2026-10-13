@@ -23,7 +23,7 @@ public class AncientAetherModelLayers {
     }
 
     private static ModelLayerLocation register(String name, String type) {
-        return register(new ResourceLocation("ancient_aether", name), type);
+        return register(ResourceLocation.fromNamespaceAndPath("ancient_aether", name), type);
     }
 
     private static ModelLayerLocation register(ResourceLocation identifier, String type) {

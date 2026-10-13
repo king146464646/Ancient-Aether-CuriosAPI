@@ -13,7 +13,7 @@ import net.builderdog.ancient_aether.data.resources.AncientAetherFeatureStates;
 import net.builderdog.ancient_aether.world.structure.processor.RemoveWaterloggingProcessor;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -35,7 +35,7 @@ public class AncientAetherProcessorLists {
     public static final ResourceKey<StructureProcessorList> SENTRY_LABORATORY_BOSS_ROOM = createKey("sentry_laboratory_boss_room");
     public static final ResourceKey<StructureProcessorList> ANCIENT_DUNGEON = createKey("ancient_dungeon");
 
-    public static void bootstrap(BootstapContext<StructureProcessorList> context) {
+    public static void bootstrap(BootstrapContext<StructureProcessorList> context) {
         register(context, HOLYSTONE_RUIN, ImmutableList.of(
                 new RuleProcessor(ImmutableList.of(
                         new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.4F), AlwaysTrueTest.INSTANCE, AncientAetherFeatureStates.MOSSY_HOLYSTONE),
@@ -166,10 +166,10 @@ public class AncientAetherProcessorLists {
     }
 
     private static ResourceKey<StructureProcessorList> createKey(String name) {
-        return ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation(AncientAether.MODID, name));
+        return ResourceKey.create(Registries.PROCESSOR_LIST, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
     }
 
-    private static void register(BootstapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> resourceKey, List<StructureProcessor> list) {
+    private static void register(BootstrapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> resourceKey, List<StructureProcessor> list) {
         context.register(resourceKey, new StructureProcessorList(list));
     }
 }

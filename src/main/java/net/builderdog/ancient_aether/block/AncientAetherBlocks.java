@@ -87,7 +87,7 @@ public class AncientAetherBlocks extends AncientAetherBlockBuilders {
     public static final DeferredBlock<WallBlock> STRIPPED_SAKURA_WOOD_WALL = register("stripped_sakura_wood_wall", AncientAetherBlocks::logWall);
 
     public static final DeferredBlock<Block> HIGHSPROOT_PLANKS = register("highsproot_planks", () -> new Block(BlockBehaviour.Properties.ofFullCopy(OAK_PLANKS)));
-    public static final DeferredBlock<StairBlock> HIGHSPROOT_STAIRS = register("highsproot_stairs", () -> new StairBlock(() -> HIGHSPROOT_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(HIGHSPROOT_PLANKS.get())));
+    public static final DeferredBlock<StairBlock> HIGHSPROOT_STAIRS = register("highsproot_stairs", () -> new StairBlock(HIGHSPROOT_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(HIGHSPROOT_PLANKS.get())));
     public static final DeferredBlock<SlabBlock> HIGHSPROOT_SLAB = register("highsproot_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(HIGHSPROOT_PLANKS.get())));
     public static final DeferredBlock<FenceBlock> HIGHSPROOT_FENCE = register("highsproot_fence", () -> new FenceBlock(Block.Properties.ofFullCopy(OAK_FENCE)));
     public static final DeferredBlock<FenceGateBlock> HIGHSPROOT_FENCE_GATE = register("highsproot_fence_gate", () -> new FenceGateBlock(AncientAetherBlockSets.HIGHSPROOT, Block.Properties.ofFullCopy(OAK_FENCE_GATE)));
@@ -102,7 +102,7 @@ public class AncientAetherBlocks extends AncientAetherBlockBuilders {
     public static final DeferredBlock<Block> HIGHSPROOT_BOOKSHELF = register("highsproot_bookshelf", () -> new BookshelfBlock(Block.Properties.ofFullCopy(BOOKSHELF)));
 
     public static final DeferredBlock<Block> SAKURA_PLANKS = register("sakura_planks", () -> new Block(BlockBehaviour.Properties.ofFullCopy(OAK_PLANKS)));
-    public static final DeferredBlock<StairBlock> SAKURA_STAIRS = register("sakura_stairs", () -> new StairBlock(() -> SAKURA_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(SAKURA_PLANKS.get())));
+    public static final DeferredBlock<StairBlock> SAKURA_STAIRS = register("sakura_stairs", () -> new StairBlock(SAKURA_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(SAKURA_PLANKS.get())));
     public static final DeferredBlock<SlabBlock> SAKURA_SLAB = register("sakura_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(SAKURA_PLANKS.get())));
     public static final DeferredBlock<FenceBlock> SAKURA_FENCE = register("sakura_fence", () -> new FenceBlock(Block.Properties.ofFullCopy(OAK_FENCE)));
     public static final DeferredBlock<FenceGateBlock> SAKURA_FENCE_GATE = register("sakura_fence_gate", () -> new FenceGateBlock(AncientAetherBlockSets.SAKURA, Block.Properties.ofFullCopy(OAK_FENCE_GATE)));
@@ -126,24 +126,24 @@ public class AncientAetherBlocks extends AncientAetherBlockBuilders {
 
     public static final DeferredBlock<Block> CARVED_TILES = register("carved_tiles", () -> dungeonBlock(MapColor.STONE));
     public static final DeferredBlock<Block> WYND_SENTRY_STONE = register("wynd_sentry_stone", () -> new Block(Block.Properties.ofFullCopy(CARVED_TILES.get()).lightLevel(s -> 7)));
-    public static final DeferredBlock<StairBlock> CARVED_TILE_STAIRS = register("carved_tile_stairs", () -> new StairBlock(() -> CARVED_TILES.get().defaultBlockState(), Block.Properties.ofFullCopy(CARVED_TILES.get())));
+    public static final DeferredBlock<StairBlock> CARVED_TILE_STAIRS = register("carved_tile_stairs", () -> new StairBlock(CARVED_TILES.get().defaultBlockState(), Block.Properties.ofFullCopy(CARVED_TILES.get())));
     public static final DeferredBlock<SlabBlock> CARVED_TILE_SLAB = register("carved_tile_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(CARVED_TILES.get())));
     public static final DeferredBlock<WallBlock> CARVED_TILE_WALL = register("carved_tile_wall", () -> new WallBlock(Block.Properties.ofFullCopy(CARVED_TILES.get())));
 
     public static final DeferredBlock<HorizontalDirectionalBlock> ANGELIC_CORNER_BRICK = register("angelic_corner_brick", () -> new HorizontalFacingBlock(Block.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> VALKYRIE_BRICKS = register("valkyrie_bricks", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<StairBlock> VALKYRIE_BRICK_STAIRS = register("valkyrie_brick_stairs", () -> new StairBlock(() -> VALKYRIE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
+    public static final DeferredBlock<StairBlock> VALKYRIE_BRICK_STAIRS = register("valkyrie_brick_stairs", () -> new StairBlock(VALKYRIE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
     public static final DeferredBlock<SlabBlock> VALKYRIE_BRICK_SLAB = register("valkyrie_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
     public static final DeferredBlock<WallBlock> VALKYRIE_BRICK_WALL = register("valkyrie_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
     public static final DeferredBlock<Block> VALKYRIE_TILES = register("valkyrie_tiles", () -> new Block(Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
-    public static final DeferredBlock<StairBlock> VALKYRIE_TILE_STAIRS = register("valkyrie_tile_stairs", () -> new StairBlock(() -> VALKYRIE_TILES.get().defaultBlockState(), Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
+    public static final DeferredBlock<StairBlock> VALKYRIE_TILE_STAIRS = register("valkyrie_tile_stairs", () -> new StairBlock(VALKYRIE_TILES.get().defaultBlockState(), Block.Properties.ofFullCopy(VALKYRIE_BRICKS.get())));
     public static final DeferredBlock<SlabBlock> VALKYRIE_TILE_SLAB = register("valkyrie_tile_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(VALKYRIE_TILES.get())));
     public static final DeferredBlock<WallBlock> VALKYRIE_TILE_WALL = register("valkyrie_tile_wall", () -> new WallBlock(Block.Properties.ofFullCopy(VALKYRIE_TILES.get())));
 
     public static final DeferredBlock<Block> AEROGETIC_STONE = register("aerogetic_stone", () -> dungeonBlock(MapColor.COLOR_CYAN));
     public static final DeferredBlock<Block> AERONAUTIC_STONE = register("aeronautic_stone", () -> new Block(Block.Properties.ofFullCopy(AEROGETIC_STONE.get()).lightLevel(s -> 11)));
     public static final DeferredBlock<Block> CORRUPTED_AERONAUTIC_STONE = register("corrupted_aeronautic_stone", () -> new Block(Block.Properties.ofFullCopy(AERONAUTIC_STONE.get())));
-    public static final DeferredBlock<StairBlock> AEROGETIC_STAIRS = register("aerogetic_stairs", () -> new StairBlock(() -> AEROGETIC_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AEROGETIC_STONE.get())));
+    public static final DeferredBlock<StairBlock> AEROGETIC_STAIRS = register("aerogetic_stairs", () -> new StairBlock(AEROGETIC_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AEROGETIC_STONE.get())));
     public static final DeferredBlock<SlabBlock> AEROGETIC_SLAB = register("aerogetic_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(AEROGETIC_STONE.get())));
     public static final DeferredBlock<WallBlock> AEROGETIC_WALL = register("aerogetic_wall", () -> new WallBlock(Block.Properties.ofFullCopy(AEROGETIC_STONE.get())));
 

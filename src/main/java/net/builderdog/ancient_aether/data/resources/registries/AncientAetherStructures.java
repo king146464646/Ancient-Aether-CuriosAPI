@@ -3,7 +3,7 @@ package net.builderdog.ancient_aether.data.resources.registries;
 import net.builderdog.ancient_aether.AncientAether;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -21,10 +21,10 @@ public class AncientAetherStructures {
     public static final ResourceKey<Structure> ANCIENT_DUNGEON = createKey("ancient_dungeon");
 
     private static ResourceKey<Structure> createKey(String name) {
-        return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(AncientAether.MODID, name));
+        return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<Structure> context) {
+    public static void bootstrap(BootstrapContext<Structure> context) {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         HolderGetter<StructureTemplatePool> templatePool = context.lookup(Registries.TEMPLATE_POOL);
     }

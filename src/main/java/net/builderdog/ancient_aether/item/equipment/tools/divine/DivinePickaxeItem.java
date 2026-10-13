@@ -6,6 +6,6 @@ import net.minecraft.world.item.PickaxeItem;
 
 public class DivinePickaxeItem extends PickaxeItem implements DivineTool {
     public DivinePickaxeItem() {
-        super(AncientAetherItemTiers.DIVINE, 1, -2.8F, new Properties());
+        super(AncientAetherItemTiers.DIVINE, new Properties().attributes(PickaxeItem.createAttributes(AncientAetherItemTiers.DIVINE, 1, -2.8F)));
     }
 }

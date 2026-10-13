@@ -1,6 +1,6 @@
 package net.builderdog.ancient_aether.world.structure.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.builderdog.ancient_aether.world.structure.AncientAetherStructureProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
@@ -16,15 +16,15 @@ import javax.annotation.Nullable;
 public class RemoveWaterloggingProcessor extends StructureProcessor {
     public static final RemoveWaterloggingProcessor INSTANCE = new RemoveWaterloggingProcessor();
 
-    public static final Codec<RemoveWaterloggingProcessor> CODEC = Codec.unit(RemoveWaterloggingProcessor.INSTANCE);
+    public static final MapCodec<RemoveWaterloggingProcessor> CODEC = MapCodec.unit(RemoveWaterloggingProcessor.INSTANCE);
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(@NotNull LevelReader level, @NotNull BlockPos origin, @NotNull BlockPos centerBottom, StructureTemplate.@NotNull StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, @NotNull StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(@NotNull LevelReader level, @NotNull BlockPos origin, @NotNull BlockPos centerBottom, StructureTemplate.@NotNull StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, @NotNull StructurePlaceSettings settings) {
         if (modifiedBlockInfo.state().hasProperty(BlockStateProperties.WATERLOGGED)) {
             return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), modifiedBlockInfo.state().setValue(BlockStateProperties.WATERLOGGED, false), modifiedBlockInfo.nbt());
         }
-        return super.process(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings, template);
+        return super.processBlock(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings);
     }
 
     @Override

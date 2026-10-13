@@ -8,7 +8,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +26,8 @@ public class ObeliskTrigger extends SimpleCriterionTrigger<ObeliskTrigger.Instan
 
     public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(Instance::player),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(Instance::item))
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                        ItemPredicate.CODEC.optionalFieldOf("item").forGetter(Instance::item))
                 .apply(instance, Instance::new));
 
         public static Criterion<Instance> forItem(ItemPredicate item) {
@@ -40,7 +39,7 @@ public class ObeliskTrigger extends SimpleCriterionTrigger<ObeliskTrigger.Instan
         }
 
         public boolean test(ItemStack stack) {
-            return item.isEmpty() || item.get().matches(stack);
+            return item.isEmpty() || item.get().test(stack);
         }
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 
-import static com.aetherteam.aether.item.EquipmentUtil.findFirstCurio;
+import static com.aetherteam.aether.item.EquipmentUtil.findFirstAccessory;
 
 public final class EquipmentUtil {
 
@@ -14,7 +14,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && (!AetherConfig.SERVER.require_gloves.get() || findFirstCurio(entity, gloves).isPresent());
+                && (!AetherConfig.SERVER.require_gloves.get() || findFirstAccessory(entity, gloves).isPresent());
     }
 
     public static boolean hasFullValkyrumSet(LivingEntity entity) {
@@ -22,7 +22,7 @@ public final class EquipmentUtil {
     }
 
     public static boolean hasCurio(LivingEntity entity, Item item) {
-        return findFirstCurio(entity, item).isPresent();
+        return findFirstAccessory(entity, item).isPresent();
     }
 
     public static boolean hasShieldOfInebriation(LivingEntity entity) {

@@ -40,11 +40,11 @@ public class DungeonEntranceFeature extends Feature<NoneFeatureConfiguration> {
 
         if (level.isEmptyBlock(pos)) {
             if (!level.isEmptyBlock(posVoid) && !level.getBlockState(posVoid).is(AetherTags.Blocks.NON_BRONZE_DUNGEON_SPAWNABLE)) {
-                StructureTemplate template = level.getLevel().getStructureManager().getOrCreate(new ResourceLocation("ancient_aether", "bronze_dungeon/entrance/entrance"));
+                StructureTemplate template = level.getLevel().getStructureManager().getOrCreate(ResourceLocation.fromNamespaceAndPath("ancient_aether", "bronze_dungeon/entrance/entrance"));
                 template.placeInWorld(level, posOffset, pos, getSettings(), random, 3);
             }
         } else {
-            StructureTemplate template = level.getLevel().getStructureManager().getOrCreate(new ResourceLocation("ancient_aether", "bronze_dungeon/entrance/staircase"));
+            StructureTemplate template = level.getLevel().getStructureManager().getOrCreate(ResourceLocation.fromNamespaceAndPath("ancient_aether", "bronze_dungeon/entrance/staircase"));
             ConfiguredFeature<?, ?> feature = Objects.requireNonNull(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(AncientAetherMiscFeatures.BRONZE_DUNGEON_ENTRANCE).orElse(null)).value();
             ChunkGenerator chunk = level.getLevel().getChunkSource().getGenerator();
             template.placeInWorld(level, posOffset, pos, getSettings(), random, 3);

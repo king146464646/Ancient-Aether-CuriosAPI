@@ -63,8 +63,8 @@ public class AncientAetherRenderers {
             event.registerLayerDefinition(AncientAetherModelLayers.REMEDY_CRYSTAL, CrystalModel::createBodyLayer);
             event.registerLayerDefinition(AncientAetherModelLayers.VALKYRUM_WINGS, () -> ValkyrieWingsModel.createMainLayer(3.5F, 3.375F));
 
-            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation(AncientAether.MODID, type.getModelLocation()), "main"), BoatModel::createBodyModel);
-            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation(AncientAether.MODID, type.getChestModelLocation()), "main"), ChestBoatModel::createBodyModel);
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, type.getModelLocation()), "main"), BoatModel::createBodyModel);
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(AncientAether.MODID, type.getChestModelLocation()), "main"), ChestBoatModel::createBodyModel);
         }
     }
 

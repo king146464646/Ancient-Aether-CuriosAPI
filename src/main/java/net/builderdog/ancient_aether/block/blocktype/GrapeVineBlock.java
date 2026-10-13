@@ -13,6 +13,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,7 +37,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -122,30 +123,24 @@ public class GrapeVineBlock extends Block implements BonemealableBlock {
 
     public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         int i = state.getValue(AGE);
-        if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
+        if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(5) == 0)) {
             BlockState blockstate = state.setValue(AGE, i + 1);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
-            CommonHooks.onCropsGrowPost(level, pos, state);
+            CommonHooks.fireCropGrowPost(level, pos, state);
         }
     }
 
-    public @NotNull InteractionResult use(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         int i = state.getValue(AGE);
         boolean flag = i == 2;
-        if (!flag && player.getItemInHand(hand).is(Items.BONE_MEAL) && player.getItemInHand(hand).canPerformAction(ToolActions.SHEARS_CARVE)) {
-            return InteractionResult.PASS;
+        if (!flag && stack.is(Items.BONE_MEAL) && stack.canPerformAction(ItemAbilities.SHEARS_CARVE)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (i > 1) {
-            int j = 1 + level.random.nextInt(1);
-            popResource(level, pos, new ItemStack(AncientAetherItems.GRAPES.get(), j + (flag ? 1 : 0)));
-            BlockState age = state.setValue(AGE, 1);
-            level.setBlock(pos, age, 2);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, age));
-            level.playSound(null, pos, AncientAetherSoundEvents.BLOCK_GRAPE_VINE_PICK_GRAPES.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return this.pickGrapes(state, level, pos, player, flag);
         }
-        if (player.getItemInHand(hand).canPerformAction(ToolActions.SHEARS_CARVE)) {
+        if (stack.canPerformAction(ItemAbilities.SHEARS_CARVE)) {
             if (!state.getValue(CROPPED)) {
                 level.gameEvent(player, GameEvent.SHEAR, pos);
                 player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
@@ -153,10 +148,29 @@ public class GrapeVineBlock extends Block implements BonemealableBlock {
                 level.setBlock(pos, cut, 2);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, cut));
                 level.playSound(null, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0F, 1.0F);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hitResult) {
+        int i = state.getValue(AGE);
+        boolean flag = i == 2;
+        if (i > 1) {
+            return this.pickGrapes(state, level, pos, player, flag).result();
+        }
+        return super.useWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    private @NotNull ItemInteractionResult pickGrapes(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, boolean flag) {
+        int j = 1 + level.random.nextInt(1);
+        popResource(level, pos, new ItemStack(AncientAetherItems.GRAPES.get(), j + (flag ? 1 : 0)));
+        BlockState age = state.setValue(AGE, 1);
+        level.setBlock(pos, age, 2);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, age));
+        level.playSound(null, pos, AncientAetherSoundEvents.BLOCK_GRAPE_VINE_PICK_GRAPES.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, BlockState state) {

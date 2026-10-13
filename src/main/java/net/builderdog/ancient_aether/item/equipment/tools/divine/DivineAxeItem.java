@@ -6,6 +6,6 @@ import net.minecraft.world.item.AxeItem;
 
 public class DivineAxeItem extends AxeItem implements DivineTool {
     public DivineAxeItem() {
-        super(AncientAetherItemTiers.DIVINE, 5.0F, -3.0F, new Properties());
+        super(AncientAetherItemTiers.DIVINE, new Properties().attributes(AxeItem.createAttributes(AncientAetherItemTiers.DIVINE, 5.0F, -3.0F)));
     }
 }

@@ -4,16 +4,16 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.util.concurrent.AtomicDouble;
 import net.builderdog.ancient_aether.block.AncientAetherBlocks;
 import net.builderdog.ancient_aether.item.EquipmentUtil;
 import net.builderdog.ancient_aether.item.equipment.tools.abilities.DivineTool;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -23,8 +23,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -49,9 +50,9 @@ public class AbilityHooks {
                 .put(AncientAetherBlocks.SAKURA_WOOD_WALL.get(), AncientAetherBlocks.STRIPPED_SAKURA_WOOD_WALL.get())
                 .build();
 
-        public static BlockState setupToolActions(BlockState old, ToolAction action) {
+        public static BlockState setupToolActions(BlockState old, ItemAbility action) {
             Block oldBlock = old.getBlock();
-            if (action == ToolActions.AXE_STRIP) {
+            if (action == ItemAbilities.AXE_STRIP) {
                 if (STRIPPABLES.containsKey(oldBlock)) {
                     return STRIPPABLES.get(oldBlock).withPropertiesOf(old);
                 }
@@ -71,7 +72,9 @@ public class AbilityHooks {
             if (AetherConfig.SERVER.tools_debuff.get()) {
                 if (!player.level().isClientSide()) {
                     debuffTools = true;
-                    PacketRelay.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
+                    if (player.level() instanceof ServerLevel serverLevel) {
+                        PacketDistributor.sendToPlayersNear(serverLevel, null, player.getX(), player.getY(), player.getZ(), 10, new ToolDebuffPacket(true));
+                    }
                 }
             }
             if (debuffTools) {
@@ -92,9 +95,14 @@ public class AbilityHooks {
                 if (source instanceof LivingEntity livingEntity) {
                     ItemStack stack = livingEntity.getMainHandItem();
                     if ((target.getType().getDescriptionId().startsWith("entity.ancient_aether") && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) {
-                        if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) {
-                            double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum();
-                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.ancient_aether.")) {
+                        if (!stack.isEmpty()) {
+                            AtomicDouble value = new AtomicDouble();
+                            stack.forEachModifier(EquipmentSlotGroup.MAINHAND, (attribute, modifier) -> {
+                                if (attribute.is(Attributes.ATTACK_DAMAGE)) {
+                                    value.set(value.get() + modifier.amount());
+                                }
+                            });
+                            if (value.get() > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.ancient_aether.")) {
                                 damage = (float) pow;
                             }
                         }
@@ -116,10 +124,13 @@ public class AbilityHooks {
                 if ((source.getType().getDescriptionId().startsWith("entity.ancient_aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) {
                     for (ItemStack stack : target.getArmorSlots()) {
                         if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.ancient_aether.")) {
-                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot()).isEmpty() && !stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).isEmpty()) {
-                                double value = stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
-                                damage += value;
-                            }
+                            AtomicDouble value = new AtomicDouble();
+                            stack.forEachModifier(armorItem.getEquipmentSlot(), (attribute, modifier) -> {
+                                if (attribute.is(Attributes.ARMOR)) {
+                                    value.set(value.get() + (modifier.amount() / 15));
+                                }
+                            });
+                            damage += (float) value.get();
                         }
                     }
                 }

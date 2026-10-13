@@ -2,7 +2,7 @@ package net.builderdog.ancient_aether.block.blocktype;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,12 +21,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AncientVaseBlock extends VaseBlock {
-    private final ResourceLocation vaseLootTable;
+    private final ResourceKey<LootTable> vaseLootTable;
 
     @SuppressWarnings("unused")
     private Vec3 position;
 
-    public AncientVaseBlock(ResourceLocation vaseLootTable, Properties properties) {
+    public AncientVaseBlock(ResourceKey<LootTable> vaseLootTable, Properties properties) {
         super(properties);
         this.vaseLootTable = vaseLootTable;
     }
@@ -35,7 +35,7 @@ public class AncientVaseBlock extends VaseBlock {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
         if (level instanceof ServerLevel serverLevel) {
             LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.BLOCK_STATE, state).withParameter(LootContextParams.TOOL, player.getMainHandItem()).withParameter(LootContextParams.ORIGIN, position).withParameter(LootContextParams.THIS_ENTITY, player).create(LootContextParamSets.BLOCK);
-            LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(vaseLootTable);
+            LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(vaseLootTable);
             List<ItemStack> list = lootTable.getRandomItems(parameters);
             for (ItemStack itemstack : list) {
                 spawnLoot(itemstack, pos, level);

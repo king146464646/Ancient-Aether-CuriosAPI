@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import javax.annotation.Nonnull;
 
 public class MutatedAechorNeedleRenderer extends ArrowRenderer<MutatedAechorNeedle> {
-    public static final ResourceLocation MUTATED_AECHOR_NEEDLE_TEXTURE = new ResourceLocation("ancient_aether", "textures/entity/projectile/mutated_aechor_needle.png");
+    public static final ResourceLocation MUTATED_AECHOR_NEEDLE_TEXTURE = ResourceLocation.fromNamespaceAndPath("ancient_aether", "textures/entity/projectile/mutated_aechor_needle.png");
 
     public MutatedAechorNeedleRenderer(EntityRendererProvider.Context context) {
         super(context);

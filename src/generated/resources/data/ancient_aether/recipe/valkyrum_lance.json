@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "aether:skyroot_stick"
+    },
+    "X": {
+      "item": "ancient_aether:valkyrum"
+    }
+  },
+  "pattern": [
+    "X  ",
+    " X ",
+    "  #"
+  ],
+  "result": {
+    "id": "ancient_aether:valkyrum_lance"
+  }
+}

@@ -1,7 +1,7 @@
 package net.builderdog.ancient_aether.attachments;
 
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import com.aetherteam.nitrogen.network.BasePacket;
+import com.aetherteam.nitrogen.network.packet.SyncPacket;
 import net.builderdog.ancient_aether.item.EquipmentUtil;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.tuple.Triple;
@@ -28,8 +28,8 @@ public class AncientAetherPlayerAttachment implements INBTSynchable {
     }
 
     @Override
-    public BasePacket getSyncPacket(int entityID, String key, Type type, Object value) {
-        return null;
+    public SyncPacket getSyncPacket(int entityID, String key, Type type, Object value) {
+        return new AncientAetherPlayerSyncPacket(entityID, key, type, value);
     }
 
     public void onUpdate(Player player) {

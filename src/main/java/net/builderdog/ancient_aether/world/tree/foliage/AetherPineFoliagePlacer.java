@@ -1,6 +1,6 @@
 package net.builderdog.ancient_aether.world.tree.foliage;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AetherPineFoliagePlacer extends FoliagePlacer {
 
-    public static final Codec<AetherPineFoliagePlacer> CODEC = RecordCodecBuilder.create((codec) -> foliagePlacerParts(codec)
+    public static final MapCodec<AetherPineFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec((codec) -> foliagePlacerParts(codec)
             .and(IntProvider.codec(0, 24).fieldOf("trunk_height").forGetter((placer) -> placer.trunkHeight))
             .apply(codec, AetherPineFoliagePlacer::new));
     private final IntProvider trunkHeight;

@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.level.SaplingGrowTreeEvent;
+import net.neoforged.neoforge.event.level.BlockGrowFeatureEvent;
 
 public class LevelListener {
 
@@ -14,8 +14,8 @@ public class LevelListener {
         bus.addListener(LevelListener::onSaplingGrow);
     }
 
-    public static void onSaplingGrow(SaplingGrowTreeEvent event) {
-        RandomSource random = event.getRandomSource();
+    public static void onSaplingGrow(BlockGrowFeatureEvent event) {
+        RandomSource random = event.getRandom();
         Holder<ConfiguredFeature<?, ?>> feature = event.getFeature();
         ResourceKey<ConfiguredFeature<?, ?>> newFeature = LevelHooks.modifyGrownSapling(random, feature);
         if (newFeature != null) {
