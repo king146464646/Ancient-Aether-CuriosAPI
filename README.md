@@ -5,7 +5,7 @@
 
 # Dependencies
 - Aeroblender v1.0.0
-- Terrablender
+- Terrablender v4.1.0.5
 - The Aether(Curios API) 1.21.1-1.5.10 or above
 
 # General Information
