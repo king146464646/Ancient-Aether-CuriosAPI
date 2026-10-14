@@ -112,7 +112,6 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             aether_version         : aether_version,
             aether_version_range   : aether_version_range,
             curios_version         : curios_version,
-            curios_version_range   : curios_version_range,
             terrablender_version_range: terrablender_version_range,
             aeroblender_version_range : aeroblender_version_range
     ]
