@@ -40,6 +40,7 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -126,7 +127,7 @@ public class AncientAether {
         MenuListener.listen(bus);
         ServerListener.listen(bus);
 
-        neoBus.addListener(AncientAetherCreativeModeTabs::buildCreativeModeTabs);
+        neoBus.addListener(EventPriority.LOWEST, AncientAetherCreativeModeTabs::buildCreativeModeTabs);
         neoBus.addListener(AncientAetherEntityTypes::registerSpawnPlacements);
         neoBus.addListener(AncientAetherEntityTypes::registerEntityAttributes);
         neoBus.addListener(AncientAetherDataAttachments::registerPackets);
