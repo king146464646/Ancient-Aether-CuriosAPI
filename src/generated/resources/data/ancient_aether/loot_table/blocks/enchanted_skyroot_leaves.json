@@ -21,7 +21,7 @@
                     {
                       "condition": "minecraft:match_tool",
                       "predicate": {
-                        "tag": "c:shears"
+                        "items": "#c:shears"
                       }
                     },
                     {
