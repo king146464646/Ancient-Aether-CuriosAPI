@@ -321,7 +321,7 @@ public class AncientAetherRecipeData extends AncientAetherRecipeProvider {
         woodenChestBoat(consumer, AncientAetherItems.HIGHSPROOT_CHEST_BOAT.get(), AncientAetherItems.HIGHSPROOT_BOAT.get());
         woodenChestBoat(consumer, AncientAetherItems.SAKURA_CHEST_BOAT.get(), AncientAetherItems.SAKURA_BOAT.get());
 
-        smeltingOreRecipe(AncientAetherItems.VALKYRIE_BRICK.get(), AncientAetherItems.VALKYRIE_CLAY_BALL.get(), 0.3F);
+        smeltingOreRecipe(AncientAetherItems.VALKYRIE_BRICK.get(), AncientAetherItems.VALKYRIE_CLAY_BALL.get(), 0.3F).save(consumer, name("valkyrie_brick_from_smelting_valkyrie_clay_ball"));
         smeltingOreRecipe(Items.QUARTZ, AncientAetherBlocks.AETHER_QUARTZ_ORE.get(), 0.5F).save(consumer, name("quartz_from_smelting_aether_quartz_ore"));
         blastingOreRecipe(Items.QUARTZ, AncientAetherBlocks.AETHER_QUARTZ_ORE.get(), 0.5F).save(consumer, name("quartz_from_blasting_aether_quartz_ore"));
 

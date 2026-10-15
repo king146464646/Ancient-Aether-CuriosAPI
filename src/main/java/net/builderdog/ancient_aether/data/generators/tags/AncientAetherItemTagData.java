@@ -478,5 +478,9 @@ public class AncientAetherItemTagData extends ItemTagsProvider {
                 AncientAetherItems.VALKYRUM_SHOVEL.get(),
                 AncientAetherItems.DIVINE_SHOVEL.get()
         );
+        tag(ItemTags.HEAD_ARMOR).add(AncientAetherItems.VALKYRUM_HELMET.get());
+        tag(ItemTags.CHEST_ARMOR).add(AncientAetherItems.VALKYRUM_CHESTPLATE.get());
+        tag(ItemTags.LEG_ARMOR).add(AncientAetherItems.VALKYRUM_LEGGINGS.get());
+        tag(ItemTags.FOOT_ARMOR).add(AncientAetherItems.VALKYRUM_BOOTS.get());
     }
 }
